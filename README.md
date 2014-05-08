@@ -10,9 +10,18 @@ Ideas from https://github.com/arunoda/node-usage/ but with no C-bindings
 ```
 var pusage = require('pidusage')
 
-pusage(pid, function(err, results) {
-	
+pusage(process.pid, function(err, stat) {
+
+	expect(err).to.be.null
+	expect(stat).to.be.an('object')
+	expect(stat).to.have.property('cpu')
+	expect(stat).to.have.property('memory')
+
+	console.log('Pcpu: %s', stat.cpu)
+	console.log('Mem: %s', stat.memory) //those are bytes
+
 })
+
 ```
 
 # What do this script do?
