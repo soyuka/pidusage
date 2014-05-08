@@ -1,0 +1,33 @@
+{
+  "name": "pidusage",
+  "version": "0.0.1",
+  "description": "Process % use and memory use of a PID",
+  "main": "index.js",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "chai": "~1.9.1",
+    "mocha": "~1.18.2"
+  },
+  "scripts": {
+    "test": "mocha test.js --reporter min"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/soyuka/pidusage"
+  },
+  "keywords": [
+    "pid",
+    "usage",
+    "ps",
+    "cpu",
+    "memory",
+    "proc"
+  ],
+  "author": "soyuka",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/soyuka/pidusage/issues"
+  },
+  "homepage": "https://github.com/soyuka/pidusage"
+}
