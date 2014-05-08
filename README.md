@@ -1,7 +1,7 @@
 pidusage
 ========
 
-Process % use and memory use of a PID
+Process cpu % and memory use of a PID
 
 Ideas from https://github.com/arunoda/node-usage/ but with no C-bindings
 
