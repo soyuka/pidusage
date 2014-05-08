@@ -10,7 +10,7 @@
     "mocha": "~1.18.2"
   },
   "scripts": {
-    "test": "mocha test.js --reporter min"
+    "test": "mocha test/test.js --reporter min"
   },
   "repository": {
     "type": "git",
