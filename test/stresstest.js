@@ -1,4 +1,4 @@
-var pusage = require('./')
+var pusage = require('../')
 
 //stress test to compare with top or another tool
 console.log(process.pid)
@@ -29,15 +29,26 @@ var i = 0
 
 
 var stress = function(cb) {
+
+	console.log('------ START ------')
+
 	pusage(process.pid, function(err, stat) {
 		console.log('Pcpu: %s', stat.cpu)
 		console.log('Mem: %s', formatBytes(stat.memory))
 		
-		if(i == 100)
-			return cb(true)
+		//this is to compare with node-usage results, but it's broken on v11.12
+		// require('usage').lookup(process.pid, {keepHistory: true}, function(err, stat) {	
+		// 	console.log('Usage Pcpu: %s', stat.cpu)
+		// 	console.log('Usage Mem: %s', formatBytes(stat.memory))
+			
 
-		i++
-		return cb(false)
+			console.log('------ END ------')
+			if(i == 100)
+				return cb(true)
+
+			i++
+			return cb(false)
+		// })
 	})
 }
 
@@ -49,7 +60,7 @@ var interval = function() {
 			else
 				return interval()
 		})
-	}, 100)
+	}, 1000)
 }
 
 setTimeout(function() {
