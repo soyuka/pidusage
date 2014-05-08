@@ -33,7 +33,7 @@ var stress = function(cb) {
 		console.log('Pcpu: %s', stat.cpu)
 		console.log('Mem: %s', formatBytes(stat.memory))
 		
-		if(i == 10000)
+		if(i == 100)
 			return cb(true)
 
 		i++
@@ -49,7 +49,7 @@ var interval = function() {
 			else
 				return interval()
 		})
-	}, 10)
+	}, 100)
 }
 
 setTimeout(function() {
