@@ -29,7 +29,7 @@ pusage(process.pid, function(err, stat) {
 A check on the `os.platform` is done to determine the method to use.
 
 ### Linux
-We use `/proc/{pid}/stat` in addition to the the `PAGE_SIZE` and the `CLK_TCK` direclty from `getconf()` command. Uptime comes from the nodejs `os.uptime()`.
+We use `/proc/{pid}/stat` in addition to the the `PAGE_SIZE` and the `CLK_TCK` direclty from `getconf()` command. Uptime comes from `proc/uptime` file because it's more accurate than the nodejs `os.uptime()`.
 
 ### On darwin, freebsd, solaris (tested on 10/11)
 We use a fallback with the `ps -o pcpu,rss -p PID` command to get the same informations.
