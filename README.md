@@ -1,6 +1,8 @@
 pidusage
 ========
 
+[![Build Status](https://travis-ci.org/soyuka/pidusage.svg?branch=master)](https://travis-ci.org/soyuka/pidusage)
+
 Process cpu % and memory use of a PID
 
 Ideas from https://github.com/arunoda/node-usage/ but with no C-bindings
