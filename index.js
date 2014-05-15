@@ -18,6 +18,7 @@ var wrapper = function(stat_type) {
 var pusage = {
 	darwin: wrapper('ps'),
 	sunos: wrapper('ps'),
+	freebsd: wrapper('ps'),
 	win: wrapper('win'),
 	linux: wrapper('proc'),
 	unsupported: function(pid, options, cb) {
