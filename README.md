@@ -2,6 +2,7 @@ pidusage
 ========
 
 [![Build Status](https://travis-ci.org/soyuka/pidusage.svg?branch=master)](https://travis-ci.org/soyuka/pidusage)
+[![Build status](https://ci.appveyor.com/api/projects/status/dqs82fp92pf2rey5)](https://ci.appveyor.com/project/soyuka/pidusage)
 
 Process cpu % and memory use of a PID
 
