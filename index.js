@@ -21,6 +21,7 @@ var pusage = {
 	freebsd: wrapper('ps'),
 	win: wrapper('win'),
 	linux: wrapper('proc'),
+	aix: wrapper('ps'),
 	unsupported: function(pid, options, cb) {
 		cb = typeof options == 'function' ? options : cb
 
