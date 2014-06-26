@@ -6,10 +6,10 @@ http.createServer(function(req, res) {
 }).listen(8020)
 
 var interval = setInterval(function () {
-	console.log('\033[2J')
-	pusage(process.pid, function(err, stat) {
-		console.log(stat)
-	})
+  console.log('\033[2J')
+  pusage(process.pid, function(err, stat) {
+    console.log(stat)
+  })
 }, 100)
 
 process.on('exit', function() {

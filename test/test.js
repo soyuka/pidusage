@@ -1,7 +1,7 @@
 var pusage = require('../')
   , expect = require('chai').expect
 
-//classic "drop somewhere"... yeah I'm a lazy guy 
+//classic "drop somewhere"... yeah I'm a lazy guy
 var formatBytes = function(bytes, precision) {
   var kilobyte = 1024;
   var megabyte = kilobyte * 1024;
@@ -24,37 +24,37 @@ var formatBytes = function(bytes, precision) {
 };
 
 describe('pid usage', function() {
-	this.timeout(4000)
+  this.timeout(4000)
 
-	it('should get pid usage', function(cb) {
-		pusage(process.pid, function(err, stat) {
+  it('should get pid usage', function(cb) {
+    pusage(process.pid, function(err, stat) {
 
-			expect(err).to.be.null
-			expect(stat).to.be.an('object')
-			expect(stat).to.have.property('cpu')
-			expect(stat).to.have.property('memory')
+      expect(err).to.be.null
+      expect(stat).to.be.an('object')
+      expect(stat).to.have.property('cpu')
+      expect(stat).to.have.property('memory')
 
-			console.log('Pcpu: %s', stat.cpu)
-			console.log('Mem: %s', formatBytes(stat.memory))
+      console.log('Pcpu: %s', stat.cpu)
+      console.log('Mem: %s', formatBytes(stat.memory))
 
-			cb()
-		})
-	})
+      cb()
+    })
+  })
 
-	it('should get pid usage again', function(cb) {
-		setTimeout(function() {
-			pusage(process.pid, function(err, stat) {
+  it('should get pid usage again', function(cb) {
+    setTimeout(function() {
+      pusage(process.pid, function(err, stat) {
 
-				expect(err).to.be.null
-				expect(stat).to.be.an('object')
-				expect(stat).to.have.property('cpu')
-				expect(stat).to.have.property('memory')
+        expect(err).to.be.null
+        expect(stat).to.be.an('object')
+        expect(stat).to.have.property('cpu')
+        expect(stat).to.have.property('memory')
 
-				console.log('Pcpu: %s', stat.cpu)
-				console.log('Mem: %s', formatBytes(stat.memory))
+        console.log('Pcpu: %s', stat.cpu)
+        console.log('Mem: %s', formatBytes(stat.memory))
 
-				cb()
-			})	
-		}, 2000)
-	})
+        cb()
+      })
+    }, 2000)
+  })
 })
