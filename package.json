@@ -1,6 +1,6 @@
 {
   "name": "pidusage",
-  "version": "0.0.7",
+  "version": "0.1.0",
   "description": "Process cpu % and memory use of a PID",
   "main": "index.js",
   "dependencies": {},
