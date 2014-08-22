@@ -29,11 +29,16 @@ var pusage = {
   }
 }
 
-module.exports = function() {
+var platform = os.platform();
+platform = platform.match(/^win/) ? 'win' : platform; //nor is windows a winner...
+platform = pusage[platform] ? platform : 'unsupported';
 
-  var platform = os.platform()
-    platform = platform.match(/^win/) ? 'win' : platform //nor is windows a winner...
-    platform = pusage[platform] ? platform : 'unsupported'
+exports.stat = function() {
+  pusage[platform].apply(stats, [].slice.call(arguments));
+};
 
-  return pusage[platform].apply(stats, [].slice.call(arguments))
-}
+exports.unmonitor = function(pid) {
+  delete stats.history[pid];
+};
+
+exports._history = stats.history;

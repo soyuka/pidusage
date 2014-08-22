@@ -1,4 +1,4 @@
-var pusage = require('../')
+var pusage = require('../').stat
   , expect = require('chai').expect
 
 //classic "drop somewhere"... yeah I'm a lazy guy
