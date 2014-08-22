@@ -13,7 +13,7 @@ Ideas from https://github.com/arunoda/node-usage/ but with no C-bindings
 ```
 var pusage = require('pidusage')
 
-pusage(process.pid, function(err, stat) {
+pusage.stat(process.pid, function(err, stat) {
 
 	expect(err).to.be.null
 	expect(stat).to.be.an('object')
@@ -25,6 +25,8 @@ pusage(process.pid, function(err, stat) {
 
 })
 
+// Unmonitor process
+pusage.unmonitor(18902);
 ```
 
 # What do this script do?
@@ -37,8 +39,8 @@ We use `/proc/{pid}/stat` in addition to the the `PAGE_SIZE` and the `CLK_TCK` d
 ### On darwin, freebsd, solaris (tested on 10/11)
 We use a fallback with the `ps -o pcpu,rss -p PID` command to get the same informations.
 
-### On AIX 
-AIX is tricky because I have no AIX test environement, at the moment we use: `ps -o pcpu,rssize -p PID` but `/proc` results should be more accurate! If you're familiar with the AIX environment and now how to get the same results as we've got with Linux systems, please help. 
+### On AIX
+AIX is tricky because I have no AIX test environement, at the moment we use: `ps -o pcpu,rssize -p PID` but `/proc` results should be more accurate! If you're familiar with the AIX environment and now how to get the same results as we've got with Linux systems, please help.
 [#4](https://github.com/soyuka/pidusage/issues/4)
 
 ### Windows

@@ -43,7 +43,7 @@ var stress = function(cb) {
 
   big_memory_leak.push(arr)
 
-  pusage(process.pid, function(err, stat) {
+  pusage.stat(process.pid, function(err, stat) {
     console.log('Pcpu: %s', stat.cpu)
     console.log('Mem: %s', formatBytes(stat.memory))
 

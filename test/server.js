@@ -7,7 +7,7 @@ http.createServer(function(req, res) {
 
 var interval = setInterval(function () {
   console.log('\033[2J')
-  pusage(process.pid, function(err, stat) {
+  pusage.stat(process.pid, function(err, stat) {
     console.log(stat)
   })
 }, 100)
