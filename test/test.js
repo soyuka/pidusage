@@ -1,4 +1,5 @@
 var pusage = require('../').stat
+  , platform = require('os').platform()
   , expect = require('chai').expect
 
 //classic "drop somewhere"... yeah I'm a lazy guy
@@ -57,4 +58,27 @@ describe('pid usage', function() {
       })
     }, 2000)
   })
-})
+
+
+  var isWindows = platform.match(/^win/);
+
+  it('should get extra process information under WINDOWS os', isWindows ? function(cb) {
+    pusage(process.pid, {extra : ['Virtual Bytes']}, function(err, stat) {
+
+      expect(err).to.be.null
+      expect(stat).to.be.an('object')
+      expect(stat).to.have.property('cpu')
+      expect(stat).to.have.property('memory')
+      expect(stat).to.have.property('all')
+      expect(stat.all).to.be.an('object')
+      expect(stat.all).to.have.property('Virtual Bytes')
+
+      console.log('Pcpu: %s', stat.cpu)
+      console.log('Mem: %s', formatBytes(stat.memory))
+      console.log('Extra: ', stat.all)
+
+      cb()
+    })
+  } : undefined)
+});
+

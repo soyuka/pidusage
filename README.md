@@ -44,7 +44,25 @@ AIX is tricky because I have no AIX test environement, at the moment we use: `ps
 [#4](https://github.com/soyuka/pidusage/issues/4)
 
 ### Windows
-Windows is really tricky, atm it uses the `wmic.exe`, feel free to share ideas on how to improve this.
+We use `typeperf` tool in Windows. 
+First `typeperf "\Process(*)\ID Process" -sc 1` command is run to resolve `process name` from `PID`, 
+afterwards information from `typeperf -sc 1 "\Process(<process name>)\% Processor Time" "\Process(<process name>)\Working Set"` commands output is parsed for stats report. 
+To get reports from other(extra) counters like `Working Set - Private` (which is not available in old `Windows`-es) you can provide their name in options as follows:
+
+```
+var pusage = require('pidusage')
+
+pusage.stat(process.pid, {extra : ['Virtual Bytes', 'Working Set - Private']}, function(err, stat) {
+
+	console.log('Pcpu: %s', stat.cpu) //same as parseFloat(stat.all['% Processor Time'])
+	console.log('Mem: %s', stat.memory) //same as parseFloat(stat.all['Working Set'])
+	
+	console.log('Virtual Bytes: %s', stat.all['Virtual Bytes']) 
+	console.log('Working Set - Private: %s', stat.all['Working Set - Private']) 
+
+})
+
+```
 
 # Licence
 
