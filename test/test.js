@@ -1,5 +1,6 @@
 var pusage = require('../').stat
-  , platform = require('os').platform()
+  , os = require('os')
+  , spawn = require('child_process').spawn
   , expect = require('chai').expect
 
 //classic "drop somewhere"... yeah I'm a lazy guy
@@ -29,56 +30,68 @@ describe('pid usage', function() {
 
   it('should get pid usage', function(cb) {
     pusage(process.pid, function(err, stat) {
+      try {
+        expect(err).to.be.null
+        expect(stat).to.be.an('object')
+        expect(stat).to.have.property('cpu')
+        expect(stat).to.have.property('memory')
+        expect(stat.cpu).to.be.at.most(100)
 
-      expect(err).to.be.null
-      expect(stat).to.be.an('object')
-      expect(stat).to.have.property('cpu')
-      expect(stat).to.have.property('memory')
+        console.log('Pcpu: %s', stat.cpu)
+        console.log('Mem: %s', formatBytes(stat.memory))
 
-      console.log('Pcpu: %s', stat.cpu)
-      console.log('Mem: %s', formatBytes(stat.memory))
-
-      cb()
+        cb()
+      }
+      catch (e) {
+        cb(e);
+      }
     })
   })
 
   it('should get pid usage again', function(cb) {
     setTimeout(function() {
       pusage(process.pid, function(err, stat) {
+        try {
+          expect(err).to.be.null
+          expect(stat).to.be.an('object')
+          expect(stat).to.have.property('cpu')
+          expect(stat).to.have.property('memory')
+          expect(stat.cpu).to.be.at.most(100)
 
-        expect(err).to.be.null
-        expect(stat).to.be.an('object')
-        expect(stat).to.have.property('cpu')
-        expect(stat).to.have.property('memory')
+          console.log('Pcpu: %s', stat.cpu)
+          console.log('Mem: %s', formatBytes(stat.memory))
 
-        console.log('Pcpu: %s', stat.cpu)
-        console.log('Mem: %s', formatBytes(stat.memory))
-
-        cb()
+          cb()
+        }
+        catch (e) {
+          cb(e);
+        }
       })
     }, 2000)
   })
 
+  it('should retrieve ~(99/[num of cpus])% of cpu usage for while(true); loop script.', function (done) {
+    // process.argv[0] should be node (or full path of node)
+    var loop    = spawn(process.argv[0], ['loop.js', 'loopit'], {cwd : __dirname}) ;
+    pusage(loop.pid, function (err, stat) {
+        var numOfCpus = os.cpus().length
+        var minCpu = 90.0 / numOfCpus, maxCpu = 100.0 / numOfCpus;
+        loop.kill();
+        try {
+          expect(stat.cpu).to.be.at.most(maxCpu)
+          expect(stat.cpu).to.be.above(minCpu)
 
-  var isWindows = platform.match(/^win/);
+          done();
+        }
+        catch (e) {
+          done(e);
+        }
+        console.log('Pcpu: %s', stat.cpu)
+        console.log('Mem: %s', formatBytes(stat.memory))
 
-  it('should get extra process information under WINDOWS os', isWindows ? function(cb) {
-    pusage(process.pid, {extra : ['Virtual Bytes']}, function(err, stat) {
-
-      expect(err).to.be.null
-      expect(stat).to.be.an('object')
-      expect(stat).to.have.property('cpu')
-      expect(stat).to.have.property('memory')
-      expect(stat).to.have.property('all')
-      expect(stat.all).to.be.an('object')
-      expect(stat.all).to.have.property('Virtual Bytes')
-
-      console.log('Pcpu: %s', stat.cpu)
-      console.log('Mem: %s', formatBytes(stat.memory))
-      console.log('Extra: ', stat.all)
-
-      cb()
     })
-  } : undefined)
+  })
+
+
 });
 
