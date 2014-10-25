@@ -32,14 +32,14 @@ describe('pid usage', function() {
   it('should get pid usage', function(cb) {
     pusage(process.pid, function(err, stat) {
       try {
+        console.log('Pcpu: %s', stat.cpu)
+        console.log('Mem: %s', formatBytes(stat.memory))
+
         expect(err).to.be.null
         expect(stat).to.be.an('object')
         expect(stat).to.have.property('cpu')
         expect(stat).to.have.property('memory')
         expect(stat.cpu).to.be.at.most(100)
-
-        console.log('Pcpu: %s', stat.cpu)
-        console.log('Mem: %s', formatBytes(stat.memory))
 
         cb()
       }
@@ -55,18 +55,17 @@ describe('pid usage', function() {
     setTimeout(function() {
       pusage(process.pid, function(err, stat) {
         try {
+          console.log('Pcpu: %s', stat.cpu)
+          console.log('Mem: %s', formatBytes(stat.memory))
           expect(err).to.be.null
           expect(stat).to.be.an('object')
           expect(stat).to.have.property('cpu')
           expect(stat).to.have.property('memory')
           expect(stat.cpu).to.be.at.most(100)
-
-          console.log('Pcpu: %s', stat.cpu)
-          console.log('Mem: %s', formatBytes(stat.memory))
-
           cb()
         }
         catch (e) {
+          console.log('Error: %s', e)
           cb(e);
         }
       })
@@ -81,18 +80,19 @@ describe('pid usage', function() {
       var minCpu = 90.0 / numOfCpus, maxCpu = 100.0 / numOfCpus;
       loop.kill();
       try {
+        console.log('Pcpu: %s', stat.cpu)
+        console.log('Mem: %s', formatBytes(stat.memory));
+
         expect(stat.cpu).to.be.at.most(maxCpu)
         expect(stat.cpu).to.be.above(minCpu)
 
         done();
       }
       catch (e) {
+        console.log('Error: %s', e)
         done(e);
       }
-      console.log('Pcpu: %s', stat.cpu)
-      console.log('Mem: %s', formatBytes(stat.memory))
 
     })
   })
-
 });
