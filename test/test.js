@@ -25,6 +25,15 @@ var formatBytes = function(bytes, precision) {
   }
 };
 
+function delay(func, delay) {
+    var self=this;
+    return function() {
+        var arg = arguments;
+        setTimeout(function () {
+            func.apply(self, arg);
+        }, delay)
+    }
+}
 describe('pid usage', function() {
   // set some finite timeout for appveyor
   this.timeout(300000); // 5 min
@@ -73,12 +82,12 @@ describe('pid usage', function() {
           cb(e);
         }
       })
-    }, 2000)
+    }, 100)
   })
 
   it('should retrieve ~(99/[num of cpus])% of cpu usage for while(true); loop script.', function (done) {
-    var d = done;
-    done = function (e){ setTimeout(function(){d(e)} , 2000)}; //
+    // report error with delay to let AppVeyor collect stdout properly
+    done = delay(done, 1000);
     // process.argv[0] should be node (or full path of node)
     var loop ;
     try {
@@ -108,6 +117,6 @@ describe('pid usage', function() {
         done(e);
       }
 
-    })
+    });
   })
 });
