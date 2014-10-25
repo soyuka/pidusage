@@ -30,7 +30,9 @@ describe('pid usage', function() {
   // this.timeout(4000)
 
   it('should get pid usage', function(cb) {
+      console.log('Starting')
     pusage(process.pid, function(err, stat) {
+        console.log('in pusage')
       try {
         expect(err).to.be.null
         expect(stat).to.be.an('object')
@@ -44,11 +46,14 @@ describe('pid usage', function() {
         cb()
       }
       catch (e) {
+        console.log('Error: %s', e)
         cb(e);
       }
     })
+    console.log('after pusage')
   })
 
+/*
   it('should get pid usage again', function(cb) {
     setTimeout(function() {
       pusage(process.pid, function(err, stat) {
@@ -92,6 +97,6 @@ describe('pid usage', function() {
 
     })
   })
-
+*/
 
 });
