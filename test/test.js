@@ -28,6 +28,10 @@ var formatBytes = function(bytes, precision) {
 describe('pid usage', function() {
   // set some finite timeout for appveyor
   this.timeout(300000); // 5 min
+  var i=1;
+  beforeEach(function () {
+      console.log(os.EOL + 'Starting test case #'+i++)
+  })
 
   it('should get pid usage', function(cb) {
     pusage(process.pid, function(err, stat) {
