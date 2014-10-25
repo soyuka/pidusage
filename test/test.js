@@ -74,14 +74,23 @@ describe('pid usage', function() {
 
   it('should retrieve ~(99/[num of cpus])% of cpu usage for while(true); loop script.', function (done) {
     // process.argv[0] should be node (or full path of node)
-    var loop    = spawn(process.argv[0], ['loop.js', 'loopit'], {cwd : __dirname}) ;
+    var loop ;
+    try {
+      loop = spawn(process.argv[0], ['loop.js', 'loopit'], {cwd : __dirname}) ;
+    }
+    catch(e) {
+      console.log("Test skipped: vailed to spawn a process: %s", e);
+      return done();
+    }
+
     pusage(loop.pid, function (err, stat) {
-      var numOfCpus = os.cpus().length
-      var minCpu = 90.0 / numOfCpus, maxCpu = 100.0 / numOfCpus;
-      loop.kill();
       try {
         console.log('Pcpu: %s', stat.cpu)
         console.log('Mem: %s', formatBytes(stat.memory));
+
+        var numOfCpus = os.cpus().length
+        var minCpu = 90.0 / numOfCpus, maxCpu = 100.0 / numOfCpus;
+        loop.kill();
 
         expect(stat.cpu).to.be.at.most(maxCpu)
         expect(stat.cpu).to.be.above(minCpu)
