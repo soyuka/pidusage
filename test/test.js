@@ -1,7 +1,7 @@
 var pusage = require('../').stat
-  , os = require('os')
-  , spawn = require('child_process').spawn
-  , expect = require('chai').expect
+    , os = require('os')
+    , spawn = require('child_process').spawn
+    , expect = require('chai').expect
 
 //classic "drop somewhere"... yeah I'm a lazy guy
 var formatBytes = function(bytes, precision) {
@@ -26,10 +26,13 @@ var formatBytes = function(bytes, precision) {
 };
 
 describe('pid usage', function() {
-  this.timeout(4000)
+    // no timeout for a while
+  // this.timeout(4000)
 
   it('should get pid usage', function(cb) {
+      console.log('Starting')
     pusage(process.pid, function(err, stat) {
+        console.log('in pusage')
       try {
         expect(err).to.be.null
         expect(stat).to.be.an('object')
@@ -43,11 +46,14 @@ describe('pid usage', function() {
         cb()
       }
       catch (e) {
+        console.log('Error: %s', e)
         cb(e);
       }
     })
+    console.log('after pusage')
   })
 
+/*
   it('should get pid usage again', function(cb) {
     setTimeout(function() {
       pusage(process.pid, function(err, stat) {
@@ -74,24 +80,23 @@ describe('pid usage', function() {
     // process.argv[0] should be node (or full path of node)
     var loop    = spawn(process.argv[0], ['loop.js', 'loopit'], {cwd : __dirname}) ;
     pusage(loop.pid, function (err, stat) {
-        var numOfCpus = os.cpus().length
-        var minCpu = 90.0 / numOfCpus, maxCpu = 100.0 / numOfCpus;
-        loop.kill();
-        try {
-          expect(stat.cpu).to.be.at.most(maxCpu)
-          expect(stat.cpu).to.be.above(minCpu)
+      var numOfCpus = os.cpus().length
+      var minCpu = 90.0 / numOfCpus, maxCpu = 100.0 / numOfCpus;
+      loop.kill();
+      try {
+        expect(stat.cpu).to.be.at.most(maxCpu)
+        expect(stat.cpu).to.be.above(minCpu)
 
-          done();
-        }
-        catch (e) {
-          done(e);
-        }
-        console.log('Pcpu: %s', stat.cpu)
-        console.log('Mem: %s', formatBytes(stat.memory))
+        done();
+      }
+      catch (e) {
+        done(e);
+      }
+      console.log('Pcpu: %s', stat.cpu)
+      console.log('Mem: %s', formatBytes(stat.memory))
 
     })
   })
-
+*/
 
 });
-
