@@ -32,9 +32,5 @@ describe('pid usage', function() {
         console.log('I\'m not going to fail. Ever!')
         expect(1).to.be.at.most(100)
   })
-  
-})
-
-
 });
 
