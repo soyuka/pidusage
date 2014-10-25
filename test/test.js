@@ -26,7 +26,8 @@ var formatBytes = function(bytes, precision) {
 };
 
 describe('pid usage', function() {
-  this.timeout(4000)
+    // no timeout for a while
+  // this.timeout(4000)
 
   it('should get pid usage', function(cb) {
     pusage(process.pid, function(err, stat) {
