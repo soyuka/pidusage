@@ -1,5 +1,4 @@
 var os = require('os')
-
 var stats = require('./lib/stats')
 
 var wrapper = function(stat_type) {
@@ -25,7 +24,7 @@ var pusage = {
   unsupported: function(pid, options, cb) {
     cb = typeof options == 'function' ? options : cb
 
-    cb(new Error(os.platform()+' is not supported yet, please fire an issue (https://github.com/soyuka/pidusage)'))
+    cb(new Error(os.platform() + ' is not supported yet, please fire an issue (https://github.com/soyuka/pidusage)'))
   }
 }
 

@@ -45,6 +45,7 @@ AIX is tricky because I have no AIX test environement, at the moment we use: `ps
 
 ### Windows
 Windows is really tricky, atm it uses the `wmic.exe`, feel free to share ideas on how to improve this.
+More specifically, thanks to [@crystaldust](https://github.com/crystaldust) we replaced `wmic PROCESS` by `wmic path Win32_PerfFormattedData_PerfProc_Process` to get more accurated data ([PR](https://github.com/soyuka/pidusage/pull/16), [commit](https://github.com/soyuka/pidusage/commit/b73c4ebf5653ea6abb6d306cc4e7069508c3d0a8)).
 
 # Licence
 
