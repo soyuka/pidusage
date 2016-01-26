@@ -36,6 +36,8 @@ A check on the `os.platform` is done to determine the method to use.
 ### Linux
 We use `/proc/{pid}/stat` in addition to the the `PAGE_SIZE` and the `CLK_TCK` direclty from `getconf()` command. Uptime comes from `proc/uptime` file because it's more accurate than the nodejs `os.uptime()`.
 
+/!\ As stated in [#17](https://github.com/soyuka/pidusage/issues/17), memory will increase when using `pidusage.stat` in an interval because of `readFile`. Use `--expose-gc` and release the garbage collector to avoid such leaking. 
+
 ### On darwin, freebsd, solaris (tested on 10/11)
 We use a fallback with the `ps -o pcpu,rss -p PID` command to get the same informations.
 
