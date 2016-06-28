@@ -6,7 +6,8 @@
   "dependencies": {},
   "devDependencies": {
     "chai": "~3.4.1",
-    "mocha": "~2.3.4"
+    "mocha": "~2.3.4",
+    "mockery": "1.4.0"
   },
   "scripts": {
     "test": "mocha test/test.js --reporter min"
