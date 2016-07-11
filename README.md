@@ -60,7 +60,7 @@ The memory usage here is what windows calls the "Working Set":
 
 > Maximum number of bytes in the working set of this process at any point in time. The working set is the set of memory pages touched recently by the threads in the process. If free memory in the computer is above a threshold, pages are left in the working set of a process even if they are not in use. When free memory falls below a threshold, pages are trimmed from working sets. If they are needed, they are then soft-faulted back into the working set before they leave main memory.
 
-For cpu usage, it's the "Percente Processor Time", which is about the same computation as it is done with linux implementations:
+For cpu usage, it's the "Percent Processor Time", which is about the same computation as it is done with linux implementations:
 
 > Returns elapsed time that all of the threads of this process used the processor to execute instructions in 100 nanoseconds ticks. An instruction is the basic unit of execution in a computer, a thread is the object that executes instructions, and a process is the object created when a program is run. Code executed to handle some hardware interrupts and trap conditions is included in this count.
 
