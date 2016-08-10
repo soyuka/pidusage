@@ -29,7 +29,7 @@ pusage.stat(process.pid, function(err, stat) {
 pusage.unmonitor(18902);
 ```
 
-## What do this script do?
+## How it works
 
 A check on the `os.platform` is done to determine the method to use.
 
