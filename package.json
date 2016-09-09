@@ -10,7 +10,7 @@
     "mockery": "1.4.0"
   },
   "scripts": {
-    "test": "mocha test/test.js --reporter min"
+    "test": "mocha test/test.js --reporter min && node test/stresstest.js"
   },
   "repository": {
     "type": "git",

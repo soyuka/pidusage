@@ -56,9 +56,12 @@ describe('pid usage', function() {
     })
   })
 
-  it('should get pid usage again', function(cb) {
+  it('should get pid usage multiple time', function(cb) {
     var pusage = require('../').stat;
-    setTimeout(function() {
+    var num = 0
+    var interval
+
+    function launch() {
       pusage(process.pid, function(err, stat) {
 
         expect(err).to.be.null
@@ -69,9 +72,16 @@ describe('pid usage', function() {
         console.log('Pcpu: %s', stat.cpu)
         console.log('Mem: %s', formatBytes(stat.memory))
 
-        cb()
+        if (++num === 5) {
+          clearInterval(interval)
+          cb()
+        } else {
+          setTimeout(launch, 100);
+        }
       })
-    }, 2000)
+    }
+
+    interval = setTimeout(launch, 1000)
   })
 
   it('should calculate correct cpu when user space time is zero (kernel module)', function(cb) {
@@ -84,7 +94,7 @@ describe('pid usage', function() {
     // override readFile to simulate the system time only (kernel module) case
     var fs = require('fs');
     var clock_tick = 100;
-    
+
     fs.readFile = function(path, encoding, callback) {
       if(path === '/proc/uptime') {
         callback(null, '0 0');
@@ -94,11 +104,11 @@ describe('pid usage', function() {
           if(i === 12) {
             infos += ' '+currentStime;
           } else {
-            infos += ' 0';  
+            infos += ' 0';
           }
-          
+
         }
-        callback(null, infos);  
+        callback(null, infos);
       }
     };
 
@@ -115,18 +125,18 @@ describe('pid usage', function() {
     mockery.registerMock('fs', fs);
     mockery.registerMock('os', os);
     mockery.registerMock('./helpers.js', helpers);
-    
+
     var pusage = require('..');
     // set the previous history as if kernel module usage had been called before
     var kernel_module_pid = 0;
     var currentStime = 10000*clock_tick;
     var previousStime = 2000*clock_tick;
-    
+
     pusage._history[kernel_module_pid] = {};
     pusage._history[kernel_module_pid].uptime = 0;
     pusage._history[kernel_module_pid].utime = 0;
     pusage._history[kernel_module_pid].stime = previousStime;
-    
+
     pusage.stat(kernel_module_pid, function(err, stat) {
       expect(stat.cpu).to.be.equal((currentStime - previousStime)/clock_tick);
       cb();
