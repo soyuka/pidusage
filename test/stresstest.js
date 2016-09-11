@@ -29,7 +29,7 @@ var i = 0, big_memory_leak = []
 
 var stress = function(cb) {
 
-  console.log('\033[2J')
+  // console.log('\033[2J')
 
   var j = 500, arr = []
 
