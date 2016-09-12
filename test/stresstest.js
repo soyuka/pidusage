@@ -54,7 +54,8 @@ var stress = function(cb) {
 
       if(i == 100)
         return cb(true)
-      else if(stat.memory > 209715200) {
+      // else if(stat.memory > 209715200) {
+      else if(stat.memory > 5e8) {
         console.log("That's enough right?")
         cb(true)
       }
