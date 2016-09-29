@@ -4,7 +4,7 @@ pidusage
 [![Build Status](https://travis-ci.org/soyuka/pidusage.svg?branch=master)](https://travis-ci.org/soyuka/pidusage)
 [![Build status](https://ci.appveyor.com/api/projects/status/dqs82fp92pf2rey5)](https://ci.appveyor.com/project/soyuka/pidusage)
 
-Cross-platform process cpu % and memory usage of a PID — Edit
+Cross-platform process cpu % and memory usage of a PID
 
 Ideas from https://github.com/arunoda/node-usage/ but with no C-bindings
 
