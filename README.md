@@ -53,20 +53,17 @@ AIX is tricky because I have no AIX test environement, at the moment we use: `ps
 [#4](https://github.com/soyuka/pidusage/issues/4)
 
 ### Windows
-Windows is really tricky, atm it uses the `wmic.exe`, feel free to share ideas on how to improve this.
-More specifically, thanks to [@crystaldust](https://github.com/crystaldust) we replaced `wmic PROCESS` by `wmic path Win32_RawData_PerfProc_Process` to get more accurated data ([PR](https://github.com/soyuka/pidusage/pull/16), [commit](https://github.com/soyuka/pidusage/commit/2c8d47d2365590684e5998be33d9ce05af5ab8f3), [switched from formatted to raw data here](https://github.com/soyuka/pidusage/commit/57e5547866bbb686b1c238b3cdc95dfeb9e801e4)).
+Windows is really tricky, atm it uses the `wmic.exe`: `wmic PROCESS {PID} get workingsetsize,usermodetime,kernelmodetime`.
 
 The memory usage here is what windows calls the "Working Set":
 
 > Maximum number of bytes in the working set of this process at any point in time. The working set is the set of memory pages touched recently by the threads in the process. If free memory in the computer is above a threshold, pages are left in the working set of a process even if they are not in use. When free memory falls below a threshold, pages are trimmed from working sets. If they are needed, they are then soft-faulted back into the working set before they leave main memory.
 
-For cpu usage, it's the "Percent Processor Time", which is about the same computation as it is done with linux implementations:
+The CPU usage is computed the same as it is on linux systems. We have the `kernelmodetime` and the `usermodetime` processor use. Every time `pidusage.stat` is called, we can calculate the processor usage according to the time spent between calls (uses `os.uptime()` internally).
 
-> Returns elapsed time that all of the threads of this process used the processor to execute instructions in 100 nanoseconds ticks. An instruction is the basic unit of execution in a computer, a thread is the object that executes instructions, and a process is the object created when a program is run. Code executed to handle some hardware interrupts and trap conditions is included in this count.
+Note that before we used `wmic path Win32_PerfFormattedData_PerfProc_Process WHERE IDProcess=` (which is slow as hell) and `Win32_PerfRawData_PerfProc_Process` (which api breaks on Windows 10 and Windows server 2012). Not every Windows bugged but just some of those. However, the `wmic PROCESS` call is faster, and safer as it must be used by internal programs since windows XP.
 
-[Source](https://msdn.microsoft.com/en-us/library/windows/desktop/aa394323(v=vs.85).aspx), [Source for raw calculation](https://msdn.microsoft.com/en-us/library/ms974615.aspx)
-
-### Why `wmic`? I have the feeling it's slow
+#### Why `wmic`?
 
 This is the safest implementation I've found that works on most Windows version (>= XP). I've tried many other implementations but there was always some failing test case. For example, powershell would be faster but powershell needs to be attached to a console ([see this comment](https://github.com/nodejs/node-v0.x-archive/issues/8795#issuecomment-68068553)). This means it'd have to popup a new `cmd.exe` every time we execute `pidusage`.
 If you know a way that doesn't imply the use of `wmic`, please open an issue so that I can try it!
