@@ -61,7 +61,7 @@ The memory usage here is what windows calls the "Working Set":
 
 The CPU usage is computed the same as it is on linux systems. We have the `kernelmodetime` and the `usermodetime` processor use. Every time `pidusage.stat` is called, we can calculate the processor usage according to the time spent between calls (uses `os.uptime()` internally).
 
-Note that before we used `wmic path Win32_PerfFormattedData_PerfProc_Process WHERE IDProcess=` (which is slow as hell) and `Win32_PerfRawData_PerfProc_Process` (which api breaks on Windows 10 and Windows server 2012). Not every Windows bugged but just some of those. However, the `wmic PROCESS` call is faster, and safer as it must be used by internal programs since windows XP.
+Note that before we used `wmic path Win32_PerfFormattedData_PerfProc_Process WHERE IDProcess=` (which is slow as hell) and `Win32_PerfRawData_PerfProc_Process` (which api breaks on Windows 10 and Windows server 2012). Not every Windows bugged but just some of those. However, the `wmic PROCESS` call is faster, and safer as it must be used by internal programs since windows XP (this is clearly an assumption).
 
 #### Why `wmic`?
 
