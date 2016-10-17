@@ -26,7 +26,7 @@ pusage.stat(process.pid, function(err, stat) {
 })
 
 // Unmonitor process
-pusage.unmonitor(18902);
+pusage.unmonitor(process.pid);
 ```
 
 ## How it works
