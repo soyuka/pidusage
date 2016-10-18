@@ -10,7 +10,7 @@ Ideas from https://github.com/arunoda/node-usage/ but with no C-bindings
 
 ## API
 
-```
+```javascript
 var pusage = require('pidusage')
 
 pusage.stat(process.pid, function(err, stat) {
