@@ -8,6 +8,8 @@ Cross-platform process cpu % and memory usage of a PID
 
 Ideas from https://github.com/arunoda/node-usage/ but with no C-bindings
 
+Please note that if you need to check a nodejs script process cpu usage, you can use [`process.cpuUsage`](https://nodejs.org/api/process.html#process_process_cpuusage_previousvalue) since node v6.1.0. This script remain useful when you have no control over the remote script, or if the process is not a nodejs process.
+
 ## API
 
 ```javascript
