@@ -18,6 +18,7 @@ var pusage = {
   darwin: wrapper('ps'),
   sunos: wrapper('ps'),
   freebsd: wrapper('ps'),
+  netbsd: wrapper('proc'),
   win: wrapper('win'),
   linux: wrapper('proc'),
   aix: wrapper('ps'),
