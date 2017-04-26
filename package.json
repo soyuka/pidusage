@@ -1,6 +1,6 @@
 {
   "name": "pidusage",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Cross-platform process cpu % and memory usage of a PID — Edit",
   "main": "index.js",
   "dependencies": {},
