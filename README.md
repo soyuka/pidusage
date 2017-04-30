@@ -70,6 +70,10 @@ Note that before we used `wmic path Win32_PerfFormattedData_PerfProc_Process WHE
 This is the safest implementation I've found that works on most Windows version (>= XP). I've tried many other implementations but there was always some failing test case. For example, powershell would be faster but powershell needs to be attached to a console ([see this comment](https://github.com/nodejs/node-v0.x-archive/issues/8795#issuecomment-68068553)). This means it'd have to popup a new `cmd.exe` every time we execute `pidusage`.
 If you know a way that doesn't imply the use of `wmic`, please open an issue so that I can try it!
 
+#### pidusage-tree
+
+If you want to compute a pidusage tree take a look at [pidusage-tree](https://github.com/soyuka/pidusage-tree). 
+
 ## Licence
 
 MIT
