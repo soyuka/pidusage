@@ -2,8 +2,10 @@ language: node_js
 branches:
   only:
     - master
+os:
+    - linux
+    - osx
 node_js:
-   - "5"
+   - "8"
+   - "6"
    - "4"
-   - "0.12"
-   - "0.10"
