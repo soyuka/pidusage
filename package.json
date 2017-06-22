@@ -9,6 +9,9 @@
     "mocha": "~2.3.4",
     "mockery": "1.4.0"
   },
+  "engines": {
+    "node": ">=0.12"
+  },
   "scripts": {
     "test": "mocha test/test.js --reporter min && node test/stresstest.js"
   },
