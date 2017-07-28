@@ -15,7 +15,10 @@ Please note that if you need to check a nodejs script process cpu usage, you can
 ```javascript
 var pusage = require('pidusage')
 
-pusage.stat(process.pid, function(err, stat) {
+// Compute statistics every second:
+
+setInterval(function() {
+    pusage.stat(process.pid, function(err, stat) {
 
 	expect(err).to.be.null
 	expect(stat).to.be.an('object')
@@ -25,9 +28,14 @@ pusage.stat(process.pid, function(err, stat) {
 	console.log('Pcpu: %s', stat.cpu)
 	console.log('Mem: %s', stat.memory) //those are bytes
 
-})
+    })
+}, 1000)
 
-// Unmonitor process
+```
+
+When you're done with the given `pid`, you may want to clear `pidusage` history (it only keeps the last stat values):
+
+```
 pusage.unmonitor(process.pid);
 ```
 
