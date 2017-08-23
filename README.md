@@ -46,7 +46,7 @@ A check on the `os.platform` is done to determine the method to use.
 ### Linux
 We use `/proc/{pid}/stat` in addition to the the `PAGE_SIZE` and the `CLK_TCK` direclty from `getconf()` command. Uptime comes from `proc/uptime` file because it's more accurate than the nodejs `os.uptime()`.
 
-/!\ As stated in [#17](https://github.com/soyuka/pidusage/issues/17), memory will increase when using `pidusage.stat` in an interval because of `readFile`. Use `--expose-gc` and release the garbage collector to avoid such leaking.
+/!\ As stated in [#17](https://github.com/soyuka/pidusage/issues/17), memory will increase when using `pidusage.stat` in an interval because of `readFile`. It will naturally be released by the garbage collector.
 
 Cpu usage is computed by following [those instructions](http://stackoverflow.com/questions/16726779/how-do-i-get-the-total-cpu-usage-of-an-application-from-proc-pid-stat/16736599#16736599). It keeps an history of the current processor time for the given pid so that the computed value gets more and more accurate. Don't forget to do `unmonitor(pid)` so that history gets cleared.
 Cpu usage does not check the child process tree!
