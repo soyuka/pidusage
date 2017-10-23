@@ -1,10 +1,10 @@
 var pusage = require('../')
 
-//stress test to compare with top or another tool
+// stress test to compare with top or another tool
 console.log('This is my PID: %s', process.pid)
 
-//classic "drop somewhere"... yeah I'm a lazy guy
-var formatBytes = function(bytes, precision) {
+// classic "drop somewhere"... yeah I'm a lazy guy
+var formatBytes = function (bytes, precision) {
   var kilobyte = 1024
   var megabyte = kilobyte * 1024
   var gigabyte = megabyte * 1024
@@ -25,15 +25,14 @@ var formatBytes = function(bytes, precision) {
   }
 }
 
-var i = 0, big_memory_leak = []
+var i = 0
+var bigMemoryLeak = []
 
-var stress = function(cb) {
+var stress = function (cb) {
+  var j = 500
+  var arr = []
 
-  // console.log('\033[2J')
-
-  var j = 500, arr = []
-
-  while(j--) {
+  while (j--) {
     arr[j] = []
 
     for (var k = 0; k < 1000; k++) {
@@ -41,44 +40,44 @@ var stress = function(cb) {
     }
   }
 
-  big_memory_leak.push(arr)
+  bigMemoryLeak.push(arr)
 
-  pusage.stat(process.pid, function(err, stat) {
+  pusage.stat(process.pid, function (err, stat) {
+    if (err) {
+      throw err
+    }
+
     console.log('Pcpu: %s', stat.cpu)
     console.log('Mem: %s', formatBytes(stat.memory))
 
-    //this is to compare with node-usage results, but it's broken on v11.12
-    // require('usage').lookup(process.pid, {keepHistory: true}, function(err, stat) {
-    // console.log('Usage Pcpu: %s', stat.cpu)
-    // console.log('Usage Mem: %s', formatBytes(stat.memory))
+    if (i === 100) {
+      return cb(null, true)
+    } else if (stat.memory > 3e8) {
+      console.log("That's enough right?")
+      cb(null, true)
+    }
 
-      if(i == 100)
-        return cb(true)
-      // else if(stat.memory > 209715200) {
-      else if(stat.memory > 5e8) {
-        console.log("That's enough right?")
-        cb(true)
-      }
-
-      i++
-      return cb(false)
-    // })
+    i++
+    return cb(null, false)
   })
 }
 
-var interval = function() {
-  return setTimeout(function() {
+var interval = function () {
+  return setTimeout(function () {
+    stress(function (err, stop) {
+      if (err) {
+        throw err
+      }
 
-    stress(function(stop) {
-      if(stop)
+      if (stop) {
         process.exit()
-      else
+      } else {
         return interval()
+      }
     })
-
   }, 400)
 }
 
-setTimeout(function() {
+setTimeout(function () {
   interval()
 }, 2000)

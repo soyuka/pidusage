@@ -7,13 +7,14 @@
   "devDependencies": {
     "chai": "~3.4.1",
     "mocha": "~2.3.4",
-    "mockery": "1.4.0"
+    "mockery": "1.4.0",
+    "standard": "^10.0.3"
   },
   "engines": {
     "node": ">=0.12"
   },
   "scripts": {
-    "test": "mocha test/test.js --reporter min && node test/stresstest.js"
+    "test": "standard index.js lib/*.js test/*.js && mocha test/test.js --reporter min && node test/stresstest.js"
   },
   "repository": {
     "type": "git",

@@ -17,8 +17,8 @@ var pusage = require('pidusage')
 
 // Compute statistics every second:
 
-setInterval(function() {
-    pusage.stat(process.pid, function(err, stat) {
+setInterval(function () {
+    pusage.stat(process.pid, function (err, stat) {
 
 	expect(err).to.be.null
 	expect(stat).to.be.an('object')
@@ -37,6 +37,25 @@ When you're done with the given `pid`, you may want to clear `pidusage` history 
 
 ```
 pusage.unmonitor(process.pid);
+```
+
+### Advanced mode
+
+If you need raw data you can use the advanced mode since 1.2.0:
+
+```javascript
+pusage(process.pid, {advanced: true}, function (err, stat) {
+  console.log(stat.time, stat.start)
+})
+```
+
+The `stat` object will contain the following:
+
+```
+- `cpu` cpu percent
+- `memory` memory bytes
+- `time` user + system time
+- `start` time process was started
 ```
 
 ## How it works
@@ -80,7 +99,7 @@ If you know a way that doesn't imply the use of `wmic`, please open an issue so 
 
 #### pidusage-tree
 
-If you want to compute a pidusage tree take a look at [pidusage-tree](https://github.com/soyuka/pidusage-tree). 
+If you want to compute a pidusage tree take a look at [pidusage-tree](https://github.com/soyuka/pidusage-tree).
 
 ## Licence
 
