@@ -101,6 +101,10 @@ If you know a way that doesn't imply the use of `wmic`, please open an issue so 
 
 If you want to compute a pidusage tree take a look at [pidusage-tree](https://github.com/soyuka/pidusage-tree).
 
+#### pidusage-promise
+
+Need promise? Use [`pidusage-promise`](https://github.com/soyuka/pidusage-promise)!
+
 ## Licence
 
 MIT
