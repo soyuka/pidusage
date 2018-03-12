@@ -44,7 +44,7 @@ pusage.unmonitor(process.pid);
 If you need raw data you can use the advanced mode since 1.2.0:
 
 ```javascript
-pusage(process.pid, {advanced: true}, function (err, stat) {
+pusage.stat(process.pid, {advanced: true}, function (err, stat) {
   console.log(stat.time, stat.start)
 })
 ```
