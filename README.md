@@ -54,8 +54,8 @@ The `stat` object will contain the following:
 ```
 - `cpu` cpu percent
 - `memory` memory bytes
-- `time` user + system time
-- `start` time process was started
+- `time` total cpu time in miliseconds
+- `start` Date when process was started
 ```
 
 ## How it works
