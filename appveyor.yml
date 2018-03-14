@@ -14,7 +14,6 @@ install:
   - set PATH=%APPDATA%\npm;%PATH%
   - set CI=true
   - npm config set progress=false
-  - npm i npm@latest -g
   - node --version
   - npm --version
   - npm install
