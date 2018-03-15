@@ -3,9 +3,6 @@ language: node_js
 node_js:
   - '9'
   - '8'
-  - '7'
-  - '6'
-  - '5'
   - '4'
 os:
   - linux
@@ -13,10 +10,3 @@ os:
 cache:
   directories:
   - node_modules
-install:
-  - node --version
-  - npm --version
-  - npm install
-script:
-  - npm test
-after_success:
