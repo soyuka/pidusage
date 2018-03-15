@@ -1,11 +1,12 @@
+sudo: false
 language: node_js
-branches:
-  only:
-    - master
-os:
-    - linux
-    - osx
 node_js:
-   - "8"
-   - "6"
-   - "4"
+  - '9'
+  - '8'
+  - '4'
+os:
+  - linux
+  - osx
+cache:
+  directories:
+  - node_modules
