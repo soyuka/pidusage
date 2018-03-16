@@ -1,20 +1,23 @@
 {
   "name": "pidusage",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "Cross-platform process cpu % and memory usage of a PID — Edit",
   "main": "index.js",
   "dependencies": {},
   "devDependencies": {
-    "chai": "~3.4.1",
-    "mocha": "~2.3.4",
+    "faucet": "0.0.1",
     "mockery": "1.4.0",
-    "standard": "^10.0.3"
+    "nanobench": "^2.1.1",
+    "standard": "^10.0.3",
+    "string-to-stream": "^1.1.0",
+    "tape": "^4.9.0",
+    "through": "^2.3.8"
   },
   "engines": {
     "node": ">=0.12"
   },
   "scripts": {
-    "test": "standard index.js lib/*.js test/*.js && mocha test/test.js --reporter min && node test/stresstest.js"
+    "test": "standard index.js lib/*.js test/*.js && node test/test.js | faucet"
   },
   "repository": {
     "type": "git",

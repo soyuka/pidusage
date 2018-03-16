@@ -1,8 +1,4 @@
-#Test section
-
-## test.js
-
-Run this one first. `mocha test`
+# Example section
 
 ## server.js
 
