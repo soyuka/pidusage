@@ -18,7 +18,6 @@ function after () {
 
 function test (tape) {
   tape.test('wmic stat (win32)', function (t) {
-    t.plan(6)
     before()
 
     var os = require('os')
@@ -28,7 +27,7 @@ function test (tape) {
     var childprocess = require('child_process')
     childprocess.spawn = function (command, args) {
       t.equal(command, 'wmic')
-      t.deepEqual(args, ['PROCESS', 'where', '"ProcessId=' + process.pid + '"', 'get', 'ProcessId,workingsetsize,usermodetime,kernelmodetime'])
+      t.deepEqual(args, ['PROCESS', 'where', '"ProcessId=' + process.pid + ' or ProcessId=1245"', 'get', 'ProcessId,workingsetsize,usermodetime,kernelmodetime'])
       var ee = new EventEmitter()
       var writable = through(function (data) {
         this.queue(data)
@@ -55,12 +54,17 @@ function test (tape) {
 
     // require after mock
     var pidusage = require('..')
-    pidusage.stat(process.pid, function (err, stat) {
+    pidusage.stat([process.pid, 1245], function (err, stat) {
       t.error(err)
-      t.equal(stat.memory, 110821376)
-      t.equal(stat.time, 8710000000)
-      t.equal(stat.pid, process.pid)
-      // @TODO test that the date
+      t.equal(stat[0].memory, 110821376)
+      t.equal(stat[0].time, 8710000000)
+      t.equal(stat[0].pid, process.pid)
+      t.ok(stat[0].start instanceof Date)
+      t.equal(stat[1].memory, 0)
+      t.equal(stat[1].time, 0)
+      t.equal(stat[1].pid, 1245)
+      t.ok(stat[1].start instanceof Date)
+      t.end()
       after()
     })
   })

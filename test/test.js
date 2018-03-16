@@ -54,7 +54,7 @@ test('unmonitor without pid (only wmic and procfile)', function (t) {
 
 test('integration mutliple pids', function (t) {
   t.plan(3)
-  var p = fork(path.join(__dirname, './fixtures/http.js'))
+  var p = fork(path.join(__dirname, './fixtures/http.js'), {env: {PORT: 8020}})
   var pids = [process.pid, p.pid]
 
   pidusage.stat(pids, function (err, stats) {
@@ -62,6 +62,30 @@ test('integration mutliple pids', function (t) {
     t.equal(stats.length, 2)
     t.deepEqual(Object.keys(stats[1]).sort(), ['cpu', 'memory', 'pid', 'start', 'time'])
     p.kill()
+  })
+})
+
+test('tree', function (t) {
+  var tree = require('ps-tree-ce')
+  var p = fork(path.join(__dirname, './fixtures/http.js'), {env: {PORT: 8021}})
+
+  tree(process.pid, function (err, children) {
+    children.push({PID: process.pid})
+    t.error(err)
+    pidusage.stat(children.map(function (p) {
+      return p.PID
+    }), function (err, statistics) {
+      for (var i = 0; i < statistics.length; i++) {
+        t.ok(!isNaN(statistics[i].cpu))
+        t.ok(!isNaN(statistics[i].memory))
+        t.ok(!isNaN(statistics[i].pid))
+        t.ok(!isNaN(statistics[i].time))
+        t.ok(statistics[i].start instanceof Date)
+      }
+      t.error(err)
+      p.kill()
+      t.end()
+    })
   })
 })
 
