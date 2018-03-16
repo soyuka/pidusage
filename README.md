@@ -39,16 +39,6 @@ When you're done with the given `pid`, you may want to clear `pidusage` history 
 pusage.unmonitor(process.pid);
 ```
 
-### Advanced mode
-
-If you need raw data you can use the advanced mode since 1.2.0:
-
-```javascript
-pusage.stat(process.pid, {advanced: true}, function (err, stat) {
-  console.log(stat.time, stat.start)
-})
-```
-
 The `stat` object will contain the following:
 
 ```
@@ -58,21 +48,21 @@ The `stat` object will contain the following:
 - `start` Date when process was started
 ```
 
+Pidusage also supports an array of pids:
+
+```javascript
+var pusage = require('pidusage')
+
+pusage.stat([0,1,2], function (err, stats) {
+  // stats is an array of statistics objects
+})
+```
+
 ## How it works
 
 A check on the `os.platform` is done to determine the method to use.
 
-### Linux
-We use `/proc/{pid}/stat` in addition to the the `PAGE_SIZE` and the `CLK_TCK` direclty from `getconf()` command. Uptime comes from `proc/uptime` file because it's more accurate than the nodejs `os.uptime()`.
-
-/!\ As stated in [#17](https://github.com/soyuka/pidusage/issues/17), memory will increase when using `pidusage.stat` in an interval because of `readFile`. It will naturally be released by the garbage collector.
-
-Cpu usage is computed by following [those instructions](http://stackoverflow.com/questions/16726779/how-do-i-get-the-total-cpu-usage-of-an-application-from-proc-pid-stat/16736599#16736599). It keeps an history of the current processor time for the given pid so that the computed value gets more and more accurate. Don't forget to do `unmonitor(pid)` so that history gets cleared.
-Cpu usage does not check the child process tree!
-
-Memory result is representing the RSS (resident set size) only by doing `rss*pagesize`, where `pagesize` is the result of `getconf PAGE_SIZE`.
-
-### On darwin, freebsd, solaris (tested on 10/11)
+### Linux On darwin, freebsd, solaris (tested on 10/11)
 We use a fallback with the `ps -o pcpu,rss -p PID` command to get the same informations.
 
 Memory usage will also display the RSS only, process cpu usage might differ from a distribution to another. Please check the correspoding `man ps` for more insights on the subject.
@@ -104,6 +94,35 @@ If you want to compute a pidusage tree take a look at [pidusage-tree](https://gi
 #### pidusage-promise
 
 Need promise? Use [`pidusage-promise`](https://github.com/soyuka/pidusage-promise)!
+
+#### Legacy
+
+Prior 2.0.0, on linux procfiles where used. It has been removed due to performance issues when reading files. Indeed, `ps` is faster.
+
+Benchmark:
+
+```
+Benching 246 process
+NANOBENCH version 2
+> node test/bench.js
+
+# procfile
+ok ~70 ms (0 s + 70322060 ns)
+
+# ps
+ok ~9.99 ms (0 s + 9991419 ns)
+
+all benchmarks completed
+ok ~80 ms (0 s + 80313479 ns)
+```
+
+We use /proc/{pid}/stat in addition to the the PAGE_SIZE and the CLK_TCK direclty from getconf() command. Uptime comes from proc/uptime file because it's more accurate than the nodejs os.uptime().
+
+/!\ As stated in #17, memory will increase when using pidusage.stat in an interval because of readFile. It will naturally be released by the garbage collector.
+
+Cpu usage is computed by following those instructions. It keeps an history of the current processor time for the given pid so that the computed value gets more and more accurate. Don't forget to do unmonitor(pid) so that history gets cleared. Cpu usage does not check the child process tree!
+
+Memory result is representing the RSS (resident set size) only by doing rss*pagesize, where pagesize is the result of getconf PAGE_SIZE.
 
 ## Licence
 
