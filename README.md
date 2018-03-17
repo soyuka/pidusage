@@ -67,6 +67,11 @@ pusage.stat([727, 1234], function (err, stat) {
 | `elapsed`   | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ |
 | `timestamp` | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ |
 
+✅ = Working
+ℹ️ = Not Accurate
+❓ = Should Work
+❌ = Not Working
+
 Please if your platform is not supported or if you have reported wrong readings
 [file an issue][new issue].
 
