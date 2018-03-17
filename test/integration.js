@@ -31,7 +31,7 @@ test('should work with a single pid', async t => {
 test('should work with an array of pids', async t => {
   const child = spawn(
     'node',
-    ['-e', 'console.log(0); const c = 0; while(true) {c = pow(c, c);}'],
+    ['-e', '"console.log(0); var c = 0; while(true) {c = Math.pow(c, c);}"'],
     {windowsHide: true, windowsVerbatimArguments: true}
   )
   const ppid = process.pid
