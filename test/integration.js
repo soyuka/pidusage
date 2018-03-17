@@ -29,9 +29,13 @@ test('should work with a single pid', async t => {
 })
 
 test('should work with an array of pids', async t => {
-  const child = spawn('node', ['-e', 'const c = 0; while(true) {c = pow(c, c);}'])
+  const child = spawn('node', ['-e', 'console.log("started"); const c = 0; while(true) {c = pow(c, c);}'])
   const ppid = process.pid
   const pid = child.pid
+
+  await new Promise(resolve => {
+    child.stdout.on('data', resolve())
+  })
 
   const pids = [ppid, pid]
   let result
@@ -46,7 +50,7 @@ test('should work with an array of pids', async t => {
   t.log(result)
 
   t.is(typeof result, 'object')
-  t.is(Object.keys(result).length, 2)
+  t.deepEqual(Object.keys(result), pids.map(pid => pid.toString()))
 
   pids.forEach(pid => {
     t.is(typeof result[pid], 'object', 'result')
