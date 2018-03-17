@@ -42,10 +42,11 @@ function test (tape) {
       ]
 
       ee.stdout = writable
+      ee.stderr = through(function (data) { this.queue(data) })
       streamify(data.join(os.EOL)).pipe(writable)
 
       writable.on('end', function () {
-        ee.emit('close')
+        ee.emit('close', 0)
       })
 
       return ee
@@ -94,10 +95,11 @@ function test (tape) {
       ]
 
       ee.stdout = writable
+      ee.stderr = through(function (data) { this.queue(data) })
       streamify(data.join(os.EOL)).pipe(writable)
 
       writable.on('end', function () {
-        ee.emit('close')
+        ee.emit('close', 0)
       })
 
       return ee
