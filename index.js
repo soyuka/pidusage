@@ -1,35 +1,30 @@
-var os = require('os')
-var stats = require('./lib/stats')
-var platform = require('./lib/platform')
-var history = {}
+'use strict'
 
-var wrapper = function (method) {
-  return function (pid, options, cb) {
-    if (typeof options === 'function') {
-      cb = options
-      options = {}
-    }
-
-    if (method === platform.UNSUPPORTED) {
-      return cb(new Error(os.platform() + ' is not supported yet, please open an issue (https://github.com/soyuka/pidusage)'), null)
-    }
-
-    options.history = history
-    return stats[method](pid, options, cb)
-  }
+function pify (fn, arg1) {
+  return new Promise(function (resolve, reject) {
+    fn(arg1, function (err, data) {
+      if (err) return reject(err)
+      resolve(data)
+    })
+  })
 }
 
-exports.stat = wrapper(platform)
+var stats = require('./lib/stats')
 
-exports.unmonitor = function (pid) {
-  if (!pid) {
-    for (var i in history) {
-      delete history[i]
-    }
+/**
+ * Get pid informations.
+ * @public
+ * @param  {Number|Number[]|String|String[]} pids A pid or a list of pids.
+ * @param  {Function} [callback=undefined] Called when the statistics are ready.
+ * If not provided a promise is returned instead.
+ * @returns  {Promise.<Object>} Only when the callback is not provided.
+ */
+function pidusage (pids, callback) {
+  if (typeof callback === 'function') {
+    stats(pids, callback)
     return
   }
-
-  delete history[pid]
+  return pify(stats, pids)
 }
 
-exports._history = history
+module.exports = pidusage

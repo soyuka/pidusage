@@ -1,27 +1,41 @@
 {
   "name": "pidusage",
   "version": "2.0.0",
-  "description": "Cross-platform process cpu % and memory usage of a PID — Edit",
-  "main": "index.js",
-  "dependencies": {},
-  "devDependencies": {
-    "faucet": "0.0.1",
-    "mockery": "1.4.0",
-    "nanobench": "^2.1.1",
-    "standard": "^10.0.3",
-    "string-to-stream": "^1.1.0",
-    "tape": "^4.9.0",
-    "through": "^2.3.8"
+  "description": "Cross-platform process cpu % and memory usage of a PID",
+  "license": "MIT",
+  "homepage": "https://github.com/soyuka/pidusage",
+  "repository": "github:soyuka/pidusage",
+  "bugs": {
+    "url": "https://github.com/soyuka/pidusage/issues"
   },
+  "author": "soyuka",
+  "contributors": [
+    "Simone Primarosa <simonepri@outlook.com> (https://simoneprimarosa.com)"
+  ],
+  "main": "index.js",
+  "files": [
+    "lib",
+    "index.js"
+  ],
   "engines": {
-    "node": ">=0.12"
+    "node": ">=4"
   },
   "scripts": {
-    "test": "standard index.js lib/*.js test/*.js && node test/test.js | faucet"
+    "lint": "standard index.js lib/**/*.js test/**/*.js",
+    "test": "npm run lint&& nyc ava -m \"!*benchmark*\"",
+    "bench": "ava -m \"*benchmark*\""
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/soyuka/pidusage"
+  "dependencies": {},
+  "devDependencies": {
+    "ava": "*",
+    "mockdate": "^2.0.2",
+    "mockery": "1.4.0",
+    "nyc": "*",
+    "pify": "^3.0.0",
+    "standard": "*",
+    "string-to-stream": "^1.1.0",
+    "through": "^2.3.8",
+    "time-span": "^2.0.0"
   },
   "keywords": [
     "pid",
@@ -31,10 +45,13 @@
     "memory",
     "proc"
   ],
-  "author": "soyuka",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/soyuka/pidusage/issues"
+  "ava": {
+    "verbose": true
   },
-  "homepage": "https://github.com/soyuka/pidusage"
+  "nyc": {
+    "reporter": [
+      "lcovonly",
+      "text"
+    ]
+  }
 }

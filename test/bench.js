@@ -1,47 +1,79 @@
-var bench = require('nanobench')
-var fs = require('fs')
-var history = {}
+import {spawn} from 'child_process'
 
-function clear () {
-  for (var i in history) {
-    delete history[i]
+import test from 'ava'
+import tspan from 'time-span'
+
+import m from '..'
+
+async function create (pidno) {
+  const code = `
+    console.log(process.pid);
+    setInterval(function(){}, 1000); // Does nothing, but prevents exit
+  `
+  let count = 0
+  const childs = []
+
+  return new Promise((resolve, reject) => {
+    for (let i = 0; i < pidno; i++) {
+      const child = spawn('node', ['-e', code], {windowsHide: true})
+      childs.push(child)
+
+      child.stdout.on('data', function (childs) {
+        if (++count === pidno) resolve(childs)
+      }.bind(this, childs))
+      child.stderr.on('data', function (data) {
+        reject(data.toString())
+      })
+      child.on('error', reject)
+    }
+  })
+}
+
+async function destroy (childs) {
+  childs.forEach(child => child.kill())
+}
+
+async function execute (childs, pidno, times) {
+  var pids = childs.map(child => child.pid).slice(0, pidno)
+
+  const end = tspan()
+  try {
+    for (let i = 0; i < times; i++) {
+      await m(pids)
+    }
+    const time = end()
+    return Promise.resolve(time)
+  } catch (err) {
+    end()
+    return Promise.reject(err)
   }
 }
 
-function getProcessList (cb) {
-  fs.readdir('/proc', function (err, list) {
-    if (err) throw err
+test.serial('should execute the benchmark', async t => {
+  const childs = await create(100)
 
-    cb(list.filter(function (v) {
-      return !isNaN(parseInt(v))
-    }))
-  })
-}
+  let time = await execute(childs, 1, 100)
+  t.log(`1 pid 100 times done in ${time.toFixed(3)} ms (${(1000 * 100 / time).toFixed(3)} op/s)`)
 
-getProcessList(function (list) {
-  console.log('Benching %d process', list.length)
+  time = await execute(childs, 2, 100)
+  t.log(`2 pid 100 times done in ${time.toFixed(3)} ms (${(1000 * 100 / time).toFixed(3)} op/s)`)
 
-  bench('procfile', function (b) {
-    var procfile = require('../lib/procfile')
-    b.start()
+  time = await execute(childs, 5, 100)
+  t.log(`5 pid 100 times done in ${time.toFixed(3)} ms (${(1000 * 100 / time).toFixed(3)} op/s)`)
 
-    procfile(list, {history: history}, function (err, data) {
-      if (err) throw err
+  time = await execute(childs, 10, 100)
+  t.log(`10 pid 100 times done in ${time.toFixed(3)} ms (${(1000 * 100 / time).toFixed(3)} op/s)`)
 
-      b.end()
-      clear()
-    })
-  })
+  time = await execute(childs, 25, 100)
+  t.log(`25 pid 100 times done in ${time.toFixed(3)} ms (${(1000 * 100 / time).toFixed(3)} op/s)`)
 
-  bench('ps', function (b) {
-    var ps = require('../lib/ps')
-    b.start()
+  time = await execute(childs, 50, 100)
+  t.log(`50 pid 100 times done in ${time.toFixed(3)} ms (${(1000 * 100 / time).toFixed(3)} op/s)`)
 
-    ps(list, {history: history}, function (err, data) {
-      if (err) throw err
+  time = await execute(childs, 100, 100)
+  t.log(`100 pid 100 times done in ${time.toFixed(3)} ms (${(1000 * 100 / time).toFixed(3)} op/s)`)
 
-      b.end()
-      clear()
-    })
-  })
+  await destroy(childs)
+
+  t.pass()
 })
