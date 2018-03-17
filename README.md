@@ -1,129 +1,137 @@
-pidusage
-========
+# pidusage
 
 [![Build Status](https://travis-ci.org/soyuka/pidusage.svg?branch=master)](https://travis-ci.org/soyuka/pidusage)
 [![Build status](https://ci.appveyor.com/api/projects/status/dqs82fp92pf2rey5)](https://ci.appveyor.com/project/soyuka/pidusage)
 
-Cross-platform process cpu % and memory usage of a PID
+Cross-platform process cpu % and memory usage of a PID.
 
-Ideas from https://github.com/arunoda/node-usage/ but with no C-bindings
+Ideas from https://github.com/arunoda/node-usage but with no C-bindings.
 
-Please note that if you need to check a nodejs script process cpu usage, you can use [`process.cpuUsage`](https://nodejs.org/api/process.html#process_process_cpuusage_previousvalue) since node v6.1.0. This script remain useful when you have no control over the remote script, or if the process is not a nodejs process.
+Please note that if you need to check a Node.JS script process cpu and memory usage, you can use [`process.cpuUsage`](https://nodejs.org/api/process.html#process_process_cpuusage_previousvalue) and [`process.memoryUsage`](https://nodejs.org/api/process.html#process_process_memoryusage) since node v6.1.0. This script remain useful when you have no control over the remote script, or if the process is not a Node.JS process.
 
-## API
 
-```javascript
+## Usage
+
+```js
 var pusage = require('pidusage')
 
 // Compute statistics every second:
-
 setInterval(function () {
-    pusage.stat(process.pid, function (err, stat) {
-
-	expect(err).to.be.null
-	expect(stat).to.be.an('object')
-	expect(stat).to.have.property('cpu')
-	expect(stat).to.have.property('memory')
-
-	console.log('Pcpu: %s', stat.cpu)
-	console.log('Mem: %s', stat.memory) //those are bytes
-
-    })
+  pusage.stat(process.pid, function (err, stat) {
+    console.log(stat)
+    // => {
+    //   cpu: 10.0,            // percentage (it may happen to be greater than 100%)
+    //   memory: 357306368,    // bytes
+    //   pid: 727,             // PID
+    //   ctime: 867000,        // ms user + system time
+    //   elapsed: 6650000,     // ms since the start of the process
+    //   timestamp: 864000000  // ms since epoch
+    // }
+  })
 }, 1000)
 
-```
-
-When you're done with the given `pid`, you may want to clear `pidusage` history (it only keeps the last stat values):
-
-```
-pusage.unmonitor(process.pid);
-```
-
-The `stat` object will contain the following:
-
-```
-- `cpu` cpu percent
-- `memory` memory bytes
-- `time` total cpu time in miliseconds
-- `start` Date when process was started
-```
-
-Pidusage also supports an array of pids:
-
-```javascript
-var pusage = require('pidusage')
-
-pusage.stat([0,1,2], function (err, stats) {
-  // stats is an array of statistics objects
+// It supports also multiple pids
+pusage.stat([727, 1234], function (err, stat) {
+  console.log(stat)
+  // => {
+  //   727: {
+  //     cpu: 10.0,            // percentage (it may happen to be greater than 100%)
+  //     memory: 357306368,    // bytes
+  //     pid: 727,             // PID
+  //     ctime: 867000,        // ms user + system time
+  //     elapsed: 6650000,     // ms since the start of the process
+  //     timestamp: 864000000  // ms since epoch
+  //   },
+  //   1234: {
+  //     cpu: 0.1,             // percentage (it may happen to be greater than 100%)
+  //     memory: 3846144,      // bytes
+  //     pid: 1234,            // PID
+  //     ctime: 0,             // ms user + system time
+  //     elapsed: 20000,       // ms since the start of the process
+  //     timestamp: 864000000  // ms since epoch
+  //   }
+  // }
 })
 ```
 
-## How it works
+## Compatibility
 
-A check on the `os.platform` is done to determine the method to use.
+| Property | Linux | FreeBSD | NetBSD | SunOS | macOS | Win | AIX |
+| ---         | --- | --- | --- | --- | --- |
+| `cpu`       | ✅ | ❓ | ❓ | ❓ | ✅ | ℹ️ | ❓ |
+| `memory`    | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ |
+| `pid`       | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ |
+| `ctime`     | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ |
+| `elapsed`   | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ |
+| `timestamp` | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ |
 
-### Linux On darwin, freebsd, solaris (tested on 10/11)
-We use a fallback with the `ps -o pcpu,rss -p PID` command to get the same informations.
+Please if your platform is not supported or if you have reported wrong readings
+[file an issue][new issue].
 
-Memory usage will also display the RSS only, process cpu usage might differ from a distribution to another. Please check the correspoding `man ps` for more insights on the subject.
+## API
 
-### On AIX
-AIX is tricky because I have no AIX test environement, at the moment we use: `ps -o pcpu,rssize -p PID` but `/proc` results should be more accurate! If you're familiar with the AIX environment and know how to get the same results as we've got with Linux systems, please help.
-[#4](https://github.com/soyuka/pidusage/issues/4)
+### Functions
 
-### Windows
-Windows is really tricky, atm it uses the `wmic.exe`: `wmic PROCESS {PID} get workingsetsize,usermodetime,kernelmodetime`.
+<dl>
+<dt><a href="#get">get(pids, callback)</a></dt>
+<dd><p>Get pid informations.</p>
+</dd>
+</dl>
 
-The memory usage here is what windows calls the "Working Set":
+### Typedefs
 
-> Maximum number of bytes in the working set of this process at any point in time. The working set is the set of memory pages touched recently by the threads in the process. If free memory in the computer is above a threshold, pages are left in the working set of a process even if they are not in use. When free memory falls below a threshold, pages are trimmed from working sets. If they are needed, they are then soft-faulted back into the working set before they leave main memory.
+<dl>
+<dt><a href="#pidCallback">pidCallback</a> : <code>function</code></dt>
+<dd></dd>
+</dl>
 
-The CPU usage is computed the same as it is on linux systems. We have the `kernelmodetime` and the `usermodetime` processor use. Every time `pidusage.stat` is called, we can calculate the processor usage according to the time spent between calls (uses `os.uptime()` internally).
+<a name="get"></a>
 
-Note that before we used `wmic path Win32_PerfFormattedData_PerfProc_Process WHERE IDProcess=` (which is slow as hell) and `Win32_PerfRawData_PerfProc_Process` (which api breaks on Windows 10 and Windows server 2012). Not every Windows bugged but just some of those. However, the `wmic PROCESS` call is faster, and safer as it must be used by internal programs since windows XP (this is clearly an assumption).
+##### get(pids, callback)
+Get pid informations.
 
-#### Why `wmic`?
+**Kind**: global function  
+**Access**: public  
 
-This is the safest implementation I've found that works on most Windows version (>= XP). I've tried many other implementations but there was always some failing test case. For example, powershell would be faster but powershell needs to be attached to a console ([see this comment](https://github.com/nodejs/node-v0.x-archive/issues/8795#issuecomment-68068553)). This means it'd have to popup a new `cmd.exe` every time we execute `pidusage`.
-If you know a way that doesn't imply the use of `wmic`, please open an issue so that I can try it!
+| Param | Type | Description |
+| --- | --- | --- |
+| pids | <code>Number</code> \| <code>Array.&lt;Number&gt;</code> \| <code>String</code> \| <code>Array.&lt;String&gt;</code> | A pid or a list of pids. |
+| callback | [<code>pidCallback</code>](#pidCallback) | Called when the statistics are ready. |
 
-#### pidusage-tree
+<a name="pidCallback"></a>
 
-If you want to compute a pidusage tree take a look at [pidusage-tree](https://github.com/soyuka/pidusage-tree).
+#### pidCallback : <code>function</code>
+**Kind**: global typedef  
 
-#### pidusage-promise
+| Param | Type | Description |
+| --- | --- | --- |
+| err | <code>Error</code> | A possible error. |
+| statistics | <code>Object</code> | The object containing the statistics. |
 
-Need promise? Use [`pidusage-promise`](https://github.com/soyuka/pidusage-promise)!
+## Related
+- [pidusage-tree][gh:pidusage-tree] -
+Promisified version of pidusage
+- [pidusage-tree][gh:pidusage-tree] -
+Compute a pidusage tree
 
-#### Legacy
+## Authors
+- **Antoine Bluchet** -  *Follow* me on *Github* ([:octocat:@soyuka][github:soyuka]) and on  *Twitter* ([🐦@s0yuka][twitter:s0yuka])
+- **Simone Primarosa** -  *Follow* me on *Github* ([:octocat:@simonepri][github:simonepri]) and on  *Twitter* ([🐦@simoneprimarosa][twitter:simoneprimarosa])
 
-Prior 2.0.0, on linux procfiles where used. It has been removed due to performance issues when reading files. Indeed, `ps` is faster.
+See also the list of [contributors][contributors] who participated in this project.
 
-Benchmark:
+## License
+This project is licensed under the MIT License - see the [LICENSE][license] file for details.
 
-```
-Benching 246 process
-NANOBENCH version 2
-> node test/bench.js
+<!-- Links -->
+[new issue]: https://github.com/soyuka/pidusage/issues/new
+[license]: https://github.com/soyuka/pidusage/tree/master/license
+[contributors]: https://github.com/soyuka/pidusage/contributors
 
-# procfile
-ok ~70 ms (0 s + 70322060 ns)
+[github:soyuka]: https://github.com/soyuka
+[twitter:s0yuka]: http://twitter.com/intent/user?screen_name=s0yuka
+[github:simonepri]: https://github.com/simonepri
+[twitter:simoneprimarosa]: http://twitter.com/intent/user?screen_name=simoneprimarosa
 
-# ps
-ok ~9.99 ms (0 s + 9991419 ns)
-
-all benchmarks completed
-ok ~80 ms (0 s + 80313479 ns)
-```
-
-We use /proc/{pid}/stat in addition to the the PAGE_SIZE and the CLK_TCK direclty from getconf() command. Uptime comes from proc/uptime file because it's more accurate than the nodejs os.uptime().
-
-/!\ As stated in #17, memory will increase when using pidusage.stat in an interval because of readFile. It will naturally be released by the garbage collector.
-
-Cpu usage is computed by following those instructions. It keeps an history of the current processor time for the given pid so that the computed value gets more and more accurate. Don't forget to do unmonitor(pid) so that history gets cleared. Cpu usage does not check the child process tree!
-
-Memory result is representing the RSS (resident set size) only by doing rss*pagesize, where pagesize is the result of getconf PAGE_SIZE.
-
-## Licence
-
-MIT
+[gh:pidusage-tree]: https://github.com/soyuka/pidusage-tree
+[gh:pidusage-promise]: https://github.com/soyuka/pidusage-promise
