@@ -5,19 +5,13 @@
   "main": "index.js",
   "dependencies": {},
   "devDependencies": {
-    "faucet": "0.0.1",
-    "mockery": "1.4.0",
-    "nanobench": "^2.1.1",
-    "standard": "^10.0.3",
-    "string-to-stream": "^1.1.0",
-    "tape": "^4.9.0",
-    "through": "^2.3.8"
+    "standard": "^10.0.3"
   },
   "engines": {
     "node": ">=0.12"
   },
   "scripts": {
-    "test": "standard index.js lib/*.js test/*.js && node test/test.js | faucet"
+    "lint": "standard index.js lib/*.js test/*.js"
   },
   "repository": {
     "type": "git",
