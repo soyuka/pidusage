@@ -8,6 +8,7 @@
     "faucet": "0.0.1",
     "mockery": "1.4.0",
     "nanobench": "^2.1.1",
+    "ps-tree-ce": "^1.1.0",
     "standard": "^10.0.3",
     "string-to-stream": "^1.1.0",
     "tape": "^4.9.0",
