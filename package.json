@@ -21,11 +21,21 @@
     "node": ">=4"
   },
   "scripts": {
-    "lint": "standard index.js lib/*.js test/*.js"
+    "lint": "standard index.js lib/*.js test/*.js",
+    "test": "npm run lint&& nyc ava -m \"!*benchmark*\"",
+    "bench": "ava -m \"*benchmark*\""
   },
   "dependencies": {},
   "devDependencies": {
-    "standard": "^10.0.3"
+    "ava": "*",
+    "mockdate": "^2.0.2",
+    "mockery": "1.4.0",
+    "nyc": "^11.6.0",
+    "pify": "^3.0.0",
+    "standard": "^10.0.3",
+    "string-to-stream": "^1.1.0",
+    "through": "^2.3.8",
+    "time-span": "^2.0.0"
   },
   "keywords": [
     "pid",
@@ -34,5 +44,14 @@
     "cpu",
     "memory",
     "proc"
-  ]
+  ],
+  "ava": {
+    "verbose": true
+  },
+  "nyc": {
+    "reporter": [
+      "lcovonly",
+      "text"
+    ]
+  }
 }
