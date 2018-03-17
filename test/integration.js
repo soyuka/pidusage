@@ -54,7 +54,7 @@ test('should work with an array of pids', async t => {
   t.log(result)
 
   t.is(typeof result, 'object')
-  t.deepEqual(Object.keys(result), pids.map(pid => pid.toString()))
+  t.deepEqual(Object.keys(result).sort(), pids.map(pid => pid.toString()).sort())
 
   pids.forEach(pid => {
     t.is(typeof result[pid], 'object', 'result')
