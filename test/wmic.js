@@ -28,8 +28,8 @@ test.after(() => {
 
 test('should parse wmic output on Windows', async t => {
   const stdout = '' +
-    'CreationDate               KernelModeTime  ProcessId  UserModeTime  WorkingSetSize' + os.EOL +
-    '20150329221650.080654+060  153750000       777        8556250000    110821376'
+    'CreationDate               KernelModeTime  ParentProcessId  ProcessId  UserModeTime  WorkingSetSize' + os.EOL +
+    '20150329221650.080654+060  153750000       0                777        8556250000    110821376'
 
   mockery.registerMock('child_process', {
     spawn: () => mocks.spawn(stdout, '', null, 0, null)
@@ -45,6 +45,7 @@ test('should parse wmic output on Windows', async t => {
     777: {
       cpu: 0,
       memory: 110821376,
+      ppid: 0,
       pid: 777,
       ctime: (855625 + 15375),
       elapsed: 1427749200000 - new Date('2015-03-29T22:16:50.080654+0100').getTime(),

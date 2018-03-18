@@ -28,11 +28,11 @@ test.after(() => {
 
 test('should parse ps output on Darwin', async t => {
   const stdout = '' +
-    '   ELAPSED   PID  %CPU     RSS           TIME' + os.EOL +
-    '2-40:50:53   430   3.0    5145  1-02:03:04.07' + os.EOL +
-    '  40:50:53   432   0.0    2364  1-01:02:03.10' + os.EOL +
-    '  01:50:50   727  10.0  348932       14:27.26' + os.EOL +
-    '     00:20  7166   0.1    3756        0:00.02'
+    '   ELAPSED   PID  PPID  %CPU     RSS           TIME' + os.EOL +
+    '2-40:50:53   430     1   3.0    5145  1-02:03:04.07' + os.EOL +
+    '  40:50:53   432   430   0.0    2364  1-01:02:03.10' + os.EOL +
+    '  01:50:50   727     1  10.0  348932       14:27.26' + os.EOL +
+    '     00:20  7166     1   0.1    3756        0:00.02'
 
   mockery.registerMock('child_process', {
     spawn: () => mocks.spawn(stdout, '', null, 0, null)
@@ -48,6 +48,7 @@ test('should parse ps output on Darwin', async t => {
     430: {
       cpu: 3.0,
       memory: 5145 * 1024,
+      ppid: 1,
       pid: 430,
       ctime: (1 * 86400 + 2 * 3600 + 3 * 60 + 4 * 1) * 1000 + (600 * 7),
       elapsed: (2 * 86400 + 40 * 3600 + 50 * 60 + 53 * 1) * 1000,
@@ -56,6 +57,7 @@ test('should parse ps output on Darwin', async t => {
     432: {
       cpu: 0.0,
       memory: 2364 * 1024,
+      ppid: 430,
       pid: 432,
       ctime: (1 * 86400 + 1 * 3600 + 2 * 60 + 3 * 1) * 1000 + (600 * 10),
       elapsed: (40 * 3600 + 50 * 60 + 53 * 1) * 1000,
@@ -64,6 +66,7 @@ test('should parse ps output on Darwin', async t => {
     727: {
       cpu: 10.0,
       memory: 348932 * 1024,
+      ppid: 1,
       pid: 727,
       ctime: (14 * 60 + 27 * 1) * 1000 + (600 * 26),
       elapsed: (1 * 3600 + 50 * 60 + 50 * 1) * 1000,
@@ -72,6 +75,7 @@ test('should parse ps output on Darwin', async t => {
     7166: {
       cpu: 0.1,
       memory: 3756 * 1024,
+      ppid: 1,
       pid: 7166,
       ctime: (600 * 2),
       elapsed: (20 * 1) * 1000,
@@ -85,11 +89,11 @@ test('should parse ps output on Darwin', async t => {
 
 test('should parse ps output on *nix', async t => {
   const stdout = '' +
-    '   ELAPSED   PID  %CPU     RSS        TIME' + os.EOL +
-    '2-40:50:53   430   3.0    5145  1-02:03:04' + os.EOL +
-    '  40:50:53   432   0.0    2364  1-01:02:03' + os.EOL +
-    '  01:50:50   727  10.0  348932       14:27' + os.EOL +
-    '     00:20  7166   0.1    3756        0:00'
+    '   ELAPSED   PID  PPID  %CPU     RSS        TIME' + os.EOL +
+    '2-40:50:53   430     1   3.0    5145  1-02:03:04' + os.EOL +
+    '  40:50:53   432   430   0.0    2364  1-01:02:03' + os.EOL +
+    '  01:50:50   727     1  10.0  348932       14:27' + os.EOL +
+    '     00:20  7166     1   0.1    3756        0:00'
 
   mockery.registerMock('child_process', {
     spawn: () => mocks.spawn(stdout, '', null, 0, null)
@@ -105,6 +109,7 @@ test('should parse ps output on *nix', async t => {
     430: {
       cpu: 3.0,
       memory: 5145 * 1024,
+      ppid: 1,
       pid: 430,
       ctime: (1 * 86400 + 2 * 3600 + 3 * 60 + 4 * 1) * 1000,
       elapsed: (2 * 86400 + 40 * 3600 + 50 * 60 + 53 * 1) * 1000,
@@ -113,6 +118,7 @@ test('should parse ps output on *nix', async t => {
     432: {
       cpu: 0.0,
       memory: 2364 * 1024,
+      ppid: 430,
       pid: 432,
       ctime: (1 * 86400 + 1 * 3600 + 2 * 60 + 3 * 1) * 1000,
       elapsed: (40 * 3600 + 50 * 60 + 53 * 1) * 1000,
@@ -121,6 +127,7 @@ test('should parse ps output on *nix', async t => {
     727: {
       cpu: 10.0,
       memory: 348932 * 1024,
+      ppid: 1,
       pid: 727,
       ctime: (14 * 60 + 27 * 1) * 1000,
       elapsed: (1 * 3600 + 50 * 60 + 50 * 1) * 1000,
@@ -129,6 +136,7 @@ test('should parse ps output on *nix', async t => {
     7166: {
       cpu: 0.1,
       memory: 3756 * 1024,
+      ppid: 1,
       pid: 7166,
       ctime: 0,
       elapsed: (20 * 1) * 1000,
