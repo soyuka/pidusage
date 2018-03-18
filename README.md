@@ -106,7 +106,7 @@ Get pid informations.
 | statistics | <code>Object</code> | The object containing the statistics. |
 
 ## Related
-- [pidusage-tree][gh:pidusage-tree] -
+- [pidusage-promise][gh:pidusage-promise] -
 Promisified version of pidusage
 - [pidusage-tree][gh:pidusage-tree] -
 Compute a pidusage tree
