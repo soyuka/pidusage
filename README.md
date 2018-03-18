@@ -19,7 +19,7 @@ var pusage = require('pidusage')
 
 // Compute statistics every second:
 setInterval(function () {
-  pusage.stat(process.pid, function (err, stat) {
+  pusage(process.pid, function (err, stat) {
     console.log(stat)
     // => {
     //   cpu: 10.0,            // percentage (it may happen to be greater than 100%)
@@ -34,7 +34,7 @@ setInterval(function () {
 }, 1000)
 
 // It supports also multiple pids
-pusage.stat([727, 1234], function (err, stat) {
+pusage([727, 1234], function (err, stat) {
   console.log(stat)
   // => {
   //   727: {
