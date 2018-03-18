@@ -7,9 +7,11 @@
 
 Cross-platform process cpu % and memory usage of a PID.
 
+## Synopsis
+
 Ideas from https://github.com/arunoda/node-usage but with no C-bindings.
 
-Please note that if you need to check a Node.JS script process cpu and memory usage, you can use [`process.cpuUsage`](https://nodejs.org/api/process.html#process_process_cpuusage_previousvalue) and [`process.memoryUsage`](https://nodejs.org/api/process.html#process_process_memoryusage) since node v6.1.0. This script remain useful when you have no control over the remote script, or if the process is not a Node.JS process.
+Please note that if you need to check a Node.JS script process cpu and memory usage, you can use [`process.cpuUsage`][node:cpuUsage] and [`process.memoryUsage`][node:memUsage] since node v6.1.0. This script remain useful when you have no control over the remote script, or if the process is not a Node.JS process.
 
 
 ## Usage
@@ -120,7 +122,7 @@ This project is licensed under the MIT License - see the [LICENSE][license] file
 
 <!-- Links -->
 [new issue]: https://github.com/soyuka/pidusage/issues/new
-[license]: https://github.com/soyuka/pidusage/tree/master/license
+[license]: https://github.com/soyuka/pidusage/tree/master/LICENSE
 [contributors]: https://github.com/soyuka/pidusage/contributors
 
 [github:soyuka]: https://github.com/soyuka
@@ -128,3 +130,6 @@ This project is licensed under the MIT License - see the [LICENSE][license] file
 
 [gh:pidusage-tree]: https://github.com/soyuka/pidusage-tree
 [gh:pidusage-promise]: https://github.com/soyuka/pidusage-promise
+
+[node:cpuUsage]: https://nodejs.org/api/process.html#process_process_cpuusage_previousvalue
+[node:memUsage]: https://nodejs.org/api/process.html#process_process_memoryusage
