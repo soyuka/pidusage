@@ -74,9 +74,6 @@ test.serial('should execute the benchmark', async t => {
   time = await execute(childs, 100, 100)
   t.log(`100 pid 100 times done in ${time.toFixed(3)} ms (${(1000 * 100 / time).toFixed(3)} op/s)`)
 
-  time = await execute(childs, 250, 100)
-  t.log(`100 pid 100 times done in ${time.toFixed(3)} ms (${(1000 * 100 / time).toFixed(3)} op/s)`)
-
   await destroy(childs)
 
   t.pass()
