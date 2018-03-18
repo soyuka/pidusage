@@ -95,9 +95,9 @@ Please if your platform is not supported or if you have reported wrong readings
 <dd></dd>
 </dl>
 
-<a name="get"></a>
+<a name="pidusage"></a>
 
-##### get(pids, callback)
+##### pidusage(pids, callback)
 Get pid informations.
 
 **Kind**: global function  
