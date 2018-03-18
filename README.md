@@ -112,8 +112,8 @@ Promisified version of pidusage
 Compute a pidusage tree
 
 ## Authors
-- **Antoine Bluchet** - [@soyuka][github:soyuka]
-- **Simone Primarosa** - [@simonepri][github:simonepri]
+- **Antoine Bluchet** - [soyuka][github:soyuka]
+- **Simone Primarosa** - [simonepri][github:simonepri]
 
 See also the list of [contributors][contributors] who participated in this project.
 
