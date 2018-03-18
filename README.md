@@ -80,24 +80,9 @@ Please if your platform is not supported or if you have reported wrong readings
 
 ## API
 
-### Functions
-
-<dl>
-<dt><a href="#get">get(pids, callback)</a></dt>
-<dd><p>Get pid informations.</p>
-</dd>
-</dl>
-
-### Typedefs
-
-<dl>
-<dt><a href="#pidCallback">pidCallback</a> : <code>function</code></dt>
-<dd></dd>
-</dl>
-
 <a name="pidusage"></a>
 
-##### pidusage(pids, callback)
+### pidusage(pids, callback)
 Get pid informations.
 
 **Kind**: global function  
@@ -110,7 +95,7 @@ Get pid informations.
 
 <a name="pidCallback"></a>
 
-#### pidCallback : <code>function</code>
+### pidCallback : <code>function</code>
 **Kind**: global typedef  
 
 | Param | Type | Description |
