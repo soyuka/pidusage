@@ -62,7 +62,7 @@ pusage.stat([727, 1234], function (err, stat) {
 ## Compatibility
 
 | Property | Linux | FreeBSD | NetBSD | SunOS | macOS | Win | AIX |
-| ---         | --- | --- | --- | --- | --- |
+| ---         | --- | --- | --- | --- | --- | --- | --- |
 | `cpu`       | ✅ | ❓ | ❓ | ❓ | ✅ | ℹ️ | ❓ |
 | `memory`    | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ |
 | `pid`       | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ |
