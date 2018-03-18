@@ -125,8 +125,8 @@ Promisified version of pidusage
 Compute a pidusage tree
 
 ## Authors
-- **Antoine Bluchet** -  *Follow* me on *Github* ([:octocat:@soyuka][github:soyuka]) and on  *Twitter* ([🐦@s0yuka][twitter:s0yuka])
-- **Simone Primarosa** -  *Follow* me on *Github* ([:octocat:@simonepri][github:simonepri]) and on  *Twitter* ([🐦@simoneprimarosa][twitter:simoneprimarosa])
+- **Antoine Bluchet** - [@soyuka][github:soyuka]
+- **Simone Primarosa** - [@simonepri][github:simonepri]
 
 See also the list of [contributors][contributors] who participated in this project.
 
@@ -139,9 +139,7 @@ This project is licensed under the MIT License - see the [LICENSE][license] file
 [contributors]: https://github.com/soyuka/pidusage/contributors
 
 [github:soyuka]: https://github.com/soyuka
-[twitter:s0yuka]: http://twitter.com/intent/user?screen_name=s0yuka
 [github:simonepri]: https://github.com/simonepri
-[twitter:simoneprimarosa]: http://twitter.com/intent/user?screen_name=simoneprimarosa
 
 [gh:pidusage-tree]: https://github.com/soyuka/pidusage-tree
 [gh:pidusage-promise]: https://github.com/soyuka/pidusage-promise
