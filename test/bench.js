@@ -11,20 +11,21 @@ async function create (pidno) {
     console.log(process.pid);
     setInterval(function(){}, 1000); // Does nothing, but prevents exit
   `
-  const spawned = {}
+  let count = 0
   const childs = []
 
   return new Promise((resolve, reject) => {
     for (let i = 0; i < pidno; i++) {
-      const child = spawn('node', ['-e', code])
+      const child = spawn('node', ['-e', code], {windowsHide: true})
       childs.push(child)
 
-      child.stdout.on('data', function (childs, i, spawned) {
-        spawned[childs[i].pid] = true
-        if (Object.keys(spawned).length === pidno) {
-          resolve(childs)
-        }
-      }.bind(this, childs, i, spawned))
+      child.stdout.on('data', function (childs) {
+        if (++count === pidno) resolve(childs)
+      }.bind(this, childs))
+      child.stderr.on('data', function (data) {
+        reject(data.toString())
+      })
+      child.on('error', reject)
     }
   })
 }
