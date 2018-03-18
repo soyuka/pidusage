@@ -37,9 +37,14 @@ test('should work with an array of pids', async t => {
   const ppid = process.pid
   const pid = child.pid
 
-  await new Promise(resolve => {
-    child.stdout.on('data', resolve)
-  })
+  await t.notThrows(
+    new Promise((resolve, reject) => {
+      child.stdout.on('data', d => resolve(d.toString()))
+      child.stderr.on('data', d => reject(d.toString()))
+      child.on('error', reject)
+      child.on('exit', reject)
+    })
+  , 'script not executed')
 
   const pids = [ppid, pid]
   let result
