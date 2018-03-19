@@ -1,114 +1,137 @@
-pidusage
-========
+# pidusage
 
-[![Build Status](https://travis-ci.org/soyuka/pidusage.svg?branch=master)](https://travis-ci.org/soyuka/pidusage)
-[![Build status](https://ci.appveyor.com/api/projects/status/dqs82fp92pf2rey5)](https://ci.appveyor.com/project/soyuka/pidusage)
+[![Mac/Linux Build Status](https://img.shields.io/travis/soyuka/pidusage/master.svg?label=MacOS%20%26%20Linux)](https://travis-ci.org/soyuka/pidusage)
+[![Windows Build status](https://img.shields.io/appveyor/ci/soyuka/pidusage/master.svg?label=Windows)](https://ci.appveyor.com/project/soyuka/pidusage)
+[![npm version](https://img.shields.io/npm/v/pidusage.svg)](https://www.npmjs.com/package/pidusage)
+[![license](https://img.shields.io/github/license/soyuka/pidusage.svg)](https://github.com/soyuka/pidusage/tree/master/license)
 
-Cross-platform process cpu % and memory usage of a PID
+Cross-platform process cpu % and memory usage of a PID.
 
-Ideas from https://github.com/arunoda/node-usage/ but with no C-bindings
+## Synopsis
 
-Please note that if you need to check a nodejs script process cpu usage, you can use [`process.cpuUsage`](https://nodejs.org/api/process.html#process_process_cpuusage_previousvalue) since node v6.1.0. This script remain useful when you have no control over the remote script, or if the process is not a nodejs process.
+Ideas from https://github.com/arunoda/node-usage but with no C-bindings.
+
+Please note that if you need to check a Node.JS script process cpu and memory usage, you can use [`process.cpuUsage`][node:cpuUsage] and [`process.memoryUsage`][node:memUsage] since node v6.1.0. This script remain useful when you have no control over the remote script, or if the process is not a Node.JS process.
+
+
+## Usage
+
+```js
+var pidusage = require('pidusage')
+
+// Compute statistics every second:
+setInterval(function () {
+  pidusage(process.pid, function (err, stats) {
+    console.log(stats)
+    // => {
+    //   cpu: 10.0,            // percentage (it may happen to be greater than 100%)
+    //   memory: 357306368,    // bytes
+    //   ppid: 312,            // PPID
+    //   pid: 727,             // PID
+    //   ctime: 867000,        // ms user + system time
+    //   elapsed: 6650000,     // ms since the start of the process
+    //   timestamp: 864000000  // ms since epoch
+    // }
+  })
+}, 1000)
+
+// It supports also multiple pids
+pidusage([727, 1234], function (err, stats) {
+  console.log(stats)
+  // => {
+  //   727: {
+  //     cpu: 10.0,            // percentage
+  //     memory: 357306368,    // bytes
+  //     ppid: 312,            // PPID
+  //     pid: 727,             // PID
+  //     ctime: 867000,        // ms user + system time
+  //     elapsed: 6650000,     // ms since the start of the process
+  //     timestamp: 864000000  // ms since epoch
+  //   },
+  //   1234: {
+  //     cpu: 0.1,             // percentage
+  //     memory: 3846144,      // bytes
+  //     ppid: 727,            // PPID
+  //     pid: 1234,            // PID
+  //     ctime: 0,             // ms user + system time
+  //     elapsed: 20000,       // ms since the start of the process
+  //     timestamp: 864000000  // ms since epoch
+  //   }
+  // }
+})
+
+// If no callback is given it returns a promise instead
+const stats = await pidusage(process.pid)
+console.log(stats)
+// => {
+//   cpu: 10.0,            // percentage (it may happen to be greater than 100%)
+//   memory: 357306368,    // bytes
+//   ppid: 312,            // PPID
+//   pid: 727,             // PID
+//   ctime: 867000,        // ms user + system time
+//   elapsed: 6650000,     // ms since the start of the process
+//   timestamp: 864000000  // ms since epoch
+// }
+```
+
+## Compatibility
+
+| Property | Linux | FreeBSD | NetBSD | SunOS | macOS | Win | AIX |
+| ---         | --- | --- | --- | --- | --- | --- | --- |
+| `cpu`       | ✅ | ❓ | ❓ | ❓ | ✅ | ℹ️ | ❓ |
+| `memory`    | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ |
+| `pid`       | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ |
+| `ctime`     | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ |
+| `elapsed`   | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ |
+| `timestamp` | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ |
+
+✅ = Working
+ℹ️ = Not Accurate
+❓ = Should Work
+❌ = Not Working
+
+Please if your platform is not supported or if you have reported wrong readings
+[file an issue][new issue].
 
 ## API
 
-```javascript
-var pusage = require('pidusage')
+<a name="pidusage"></a>
 
-// Compute statistics every second:
+### pidusage(pids, [callback]) ⇒ <code>[Promise.&lt;Object&gt;]</code>
+Get pid informations.
 
-setInterval(function () {
-    pusage.stat(process.pid, function (err, stat) {
+**Kind**: global function
+**Returns**: <code>Promise.&lt;Object&gt;</code> - Only when the callback is not provided.
+**Access**: public
 
-	expect(err).to.be.null
-	expect(stat).to.be.an('object')
-	expect(stat).to.have.property('cpu')
-	expect(stat).to.have.property('memory')
+| Param | Type | Description |
+| --- | --- | --- |
+| pids | <code>Number</code> \| <code>Array.&lt;Number&gt;</code> \| <code>String</code> \| <code>Array.&lt;String&gt;</code> | A pid or a list of pids. |
+| [callback] | <code>function</code> | Called when the statistics are ready. If not provided a promise is returned instead. |
 
-	console.log('Pcpu: %s', stat.cpu)
-	console.log('Mem: %s', stat.memory) //those are bytes
+## Related
+- [pidusage-tree][gh:pidusage-tree] -
+Compute a pidusage tree
 
-    })
-}, 1000)
+## Authors
+- **Antoine Bluchet** - [soyuka][github:soyuka]
+- **Simone Primarosa** - [simonepri][github:simonepri]
 
-```
+See also the list of [contributors][contributors] who participated in this project.
 
-When you're done with the given `pid`, you may want to clear `pidusage` history (it only keeps the last stat values):
+## License
+This project is licensed under the MIT License - see the [LICENSE][license] file for details.
 
-```
-pusage.unmonitor(process.pid);
-```
+<!-- Links -->
+[new issue]: https://github.com/soyuka/pidusage/issues/new
+[license]: https://github.com/soyuka/pidusage/tree/master/LICENSE
+[contributors]: https://github.com/soyuka/pidusage/contributors
 
-The `stat` object will contain the following:
+[github:soyuka]: https://github.com/soyuka
+[github:simonepri]: https://github.com/simonepri
 
-```
-- `cpu` cpu percent
-- `memory` memory bytes
-- `time` elapsed time since started
-- `start` Date when process was started
-```
+[gh:pidusage-tree]: https://github.com/soyuka/pidusage-tree
 
-Pidusage also supports an array of pids:
+[node:cpuUsage]: https://nodejs.org/api/process.html#process_process_cpuusage_previousvalue
+[node:memUsage]: https://nodejs.org/api/process.html#process_process_memoryusage
 
-```javascript
-var pusage = require('pidusage')
-
-pusage.stat([0,1,2], function (err, stats) {
-  // stats is an array of statistics objects
-})
-```
-
-## How it works
-
-A check on the `os.platform` is done to determine the method to use.
-
-### Linux (aix, darwin, freebsd, solaris (tested on 10/11))
-Use the `ps -o pcpu,rss -p PID` command to get the same informations.
-
-Memory usage will also display the RSS only, process cpu usage might differ from a distribution to another. Please check the correspoding `man ps` for more insights on the subject.
-
-[#4](https://github.com/soyuka/pidusage/issues/4)
-
-### Windows
-Windows uses the `wmic.exe`: `wmic PROCESS {PID} get workingsetsize,usermodetime,kernelmodetime`.
-
-The memory usage here is what windows calls the "Working Set":
-
-> Maximum number of bytes in the working set of this process at any point in time. The working set is the set of memory pages touched recently by the threads in the process. If free memory in the computer is above a threshold, pages are left in the working set of a process even if they are not in use. When free memory falls below a threshold, pages are trimmed from working sets. If they are needed, they are then soft-faulted back into the working set before they leave main memory.
-
-The CPU usage is computed the same as it is on linux systems. We have the `kernelmodetime` and the `usermodetime` processor use. Every time `pidusage.stat` is called, we can calculate the processor usage according to the time spent between calls (uses `os.uptime()` internally).
-
-Note that before we used `wmic path Win32_PerfFormattedData_PerfProc_Process WHERE IDProcess=` (which is slow as hell) and `Win32_PerfRawData_PerfProc_Process` (which api breaks on Windows 10 and Windows server 2012). Not every Windows bugged but just some of those. However, the `wmic PROCESS` call is faster.
-
-#### pidusage-tree
-
-If you want to compute a pidusage tree take a look at [pidusage-tree](https://github.com/soyuka/pidusage-tree).
-
-#### pidusage-promise
-
-Need promise? Use [pidusage-promise](https://github.com/soyuka/pidusage-promise)!
-
-#### Legacy
-
-Prior 2.0.0, on linux procfiles where used. It has been removed due to performance issues when reading files. Indeed, `ps` is faster.
-
-Benchmark:
-
-```
-Benching 246 process
-NANOBENCH version 2
-> node test/bench.js
-
-# procfile
-ok ~70 ms (0 s + 70322060 ns)
-
-# ps
-ok ~9.99 ms (0 s + 9991419 ns)
-
-all benchmarks completed
-ok ~80 ms (0 s + 80313479 ns)
-```
-
-## Licence
-
-MIT
