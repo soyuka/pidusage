@@ -19,3 +19,5 @@ install:
   - npm install
 test_script:
   - npm test
+after_test:
+  - npm run bench
