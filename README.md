@@ -2,6 +2,7 @@
 
 [![Mac/Linux Build Status](https://img.shields.io/travis/soyuka/pidusage/master.svg?label=MacOS%20%26%20Linux)](https://travis-ci.org/soyuka/pidusage)
 [![Windows Build status](https://img.shields.io/appveyor/ci/soyuka/pidusage/master.svg?label=Windows)](https://ci.appveyor.com/project/soyuka/pidusage)
+[![Code coverage](https://img.shields.io/codecov/c/github/soyuka/pidusage/master.svg)](https://codecov.io/gh/soyuka/pidusage)
 [![npm version](https://img.shields.io/npm/v/pidusage.svg)](https://www.npmjs.com/package/pidusage)
 [![license](https://img.shields.io/github/license/soyuka/pidusage.svg)](https://github.com/soyuka/pidusage/tree/master/license)
 
