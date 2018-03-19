@@ -98,7 +98,7 @@ Please if your platform is not supported or if you have reported wrong readings
 
 <a name="pidusage"></a>
 
-### pidusage(pids, [callback]) ⇒ <code>[Promise.&lt;Object&gt;]</code>
+### pidusage(pids, [options = {}], [callback]) ⇒ <code>[Promise.&lt;Object&gt;]</code>
 Get pid informations.
 
 **Kind**: global function
