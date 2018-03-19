@@ -23,11 +23,13 @@
   "scripts": {
     "lint": "standard index.js lib/**/*.js test/**/*.js",
     "test": "npm run lint && nyc ava -m \"!*benchmark*\"",
+    "coverage": "codecov",
     "bench": "ava -m \"*benchmark*\""
   },
   "dependencies": {},
   "devDependencies": {
     "ava": "*",
+    "codecov": "^3.0.0",
     "mockdate": "^2.0.2",
     "mockery": "1.4.0",
     "nyc": "*",
