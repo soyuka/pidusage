@@ -1,7 +1,6 @@
 import {spawn} from 'child_process'
 
 import test from 'ava'
-import pify from 'pify'
 import tspan from 'time-span'
 
 import m from '..'
@@ -40,7 +39,7 @@ async function execute (childs, pidno, times) {
   const end = tspan()
   try {
     for (let i = 0; i < times; i++) {
-      await pify(m)(pids)
+      await m(pids)
     }
     const time = end()
     return Promise.resolve(time)

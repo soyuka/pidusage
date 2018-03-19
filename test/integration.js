@@ -2,14 +2,12 @@ import {spawn} from 'child_process'
 
 import test from 'ava'
 
-import pify from 'pify'
-
 import m from '..'
 
 test('should work with a single pid', async t => {
   const pid = process.pid
 
-  const result = await pify(m)(pid)
+  const result = await m(pid)
 
   t.log(result)
 
@@ -51,7 +49,7 @@ test('should work with an array of pids', async t => {
   const pids = [ppid, pid]
   let result
   try {
-    result = await pify(m)(pids)
+    result = await m(pids)
     child.kill()
   } catch (err) {
     child.kill()
@@ -81,33 +79,37 @@ test('should work with an array of pids', async t => {
 })
 
 test('should throw an error if no pid is provided', async t => {
-  const err = await t.throws(pify(m)([]))
+  const err = await t.throws(m([]))
   t.is(err.message, 'You must provide at least one pid')
 })
 
 test('should throw an error if one of the pid is invalid', async t => {
-  let err = await t.throws(pify(m)(null))
+  let err = await t.throws(m(null))
   t.is(err.message, 'One of the pids provided is invalid')
-  err = await t.throws(pify(m)([null]))
+  err = await t.throws(m([null]))
   t.is(err.message, 'One of the pids provided is invalid')
-  err = await t.throws(pify(m)(['invalid']))
+  err = await t.throws(m(['invalid']))
   t.is(err.message, 'One of the pids provided is invalid')
-  err = await t.throws(pify(m)(-1))
+  err = await t.throws(m(-1))
   t.is(err.message, 'One of the pids provided is invalid')
-  err = await t.throws(pify(m)([-1]))
+  err = await t.throws(m([-1]))
   t.is(err.message, 'One of the pids provided is invalid')
 })
 
 test('should not throw an error if one of the pids does not exists', async t => {
-  await t.notThrows(pify(m)([process.pid, 65535]))
-  await t.notThrows(pify(m)([65535, process.pid]))
+  await t.notThrows(m([process.pid, 65535]))
+  await t.notThrows(m([65535, process.pid]))
 })
 
 test('should throw an error if the pid does not exists', async t => {
-  const err = await t.throws(pify(m)([65535]))
+  const err = await t.throws(m([65535]))
   t.is(err.message, 'No maching pid found')
 })
 
 test('should throw an error if the pid is too large', async t => {
-  await t.throws(pify(m)(99999999))
+  await t.throws(m(99999999))
+})
+
+test.cb("should use the callback if it's provided", t => {
+  m(process.pid, t.end)
 })

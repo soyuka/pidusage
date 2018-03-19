@@ -17,12 +17,12 @@ Please note that if you need to check a Node.JS script process cpu and memory us
 ## Usage
 
 ```js
-var pusage = require('pidusage')
+var pidusage = require('pidusage')
 
 // Compute statistics every second:
 setInterval(function () {
-  pusage(process.pid, function (err, stat) {
-    console.log(stat)
+  pidusage(process.pid, function (err, stats) {
+    console.log(stats)
     // => {
     //   cpu: 10.0,            // percentage (it may happen to be greater than 100%)
     //   memory: 357306368,    // bytes
@@ -36,8 +36,8 @@ setInterval(function () {
 }, 1000)
 
 // It supports also multiple pids
-pusage([727, 1234], function (err, stat) {
-  console.log(stat)
+pidusage([727, 1234], function (err, stats) {
+  console.log(stats)
   // => {
   //   727: {
   //     cpu: 10.0,            // percentage
@@ -59,6 +59,19 @@ pusage([727, 1234], function (err, stat) {
   //   }
   // }
 })
+
+// If no callback is given it returns a promise instead
+const stats = await pidusage(process.pid)
+console.log(stats)
+// => {
+//   cpu: 10.0,            // percentage (it may happen to be greater than 100%)
+//   memory: 357306368,    // bytes
+//   ppid: 312,            // PPID
+//   pid: 727,             // PID
+//   ctime: 867000,        // ms user + system time
+//   elapsed: 6650000,     // ms since the start of the process
+//   timestamp: 864000000  // ms since epoch
+// }
 ```
 
 ## Compatibility
@@ -84,30 +97,19 @@ Please if your platform is not supported or if you have reported wrong readings
 
 <a name="pidusage"></a>
 
-### pidusage(pids, callback)
+### pidusage(pids, [callback]) ⇒ <code>[Promise.&lt;Object&gt;]</code>
 Get pid informations.
 
 **Kind**: global function  
+**Returns**: <code>Promise.&lt;Object&gt;</code> - Only when the callback is not provided.  
 **Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | pids | <code>Number</code> \| <code>Array.&lt;Number&gt;</code> \| <code>String</code> \| <code>Array.&lt;String&gt;</code> | A pid or a list of pids. |
-| callback | [<code>pidCallback</code>](#pidCallback) | Called when the statistics are ready. |
-
-<a name="pidCallback"></a>
-
-### pidCallback : <code>function</code>
-**Kind**: global typedef  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| err | <code>Error</code> | A possible error. |
-| statistics | <code>Object</code> | The object containing the statistics. |
+| [callback] | <code>function</code> | Called when the statistics are ready. If not provided a promise is returned instead. |
 
 ## Related
-- [pidusage-promise][gh:pidusage-promise] -
-Promisified version of pidusage
 - [pidusage-tree][gh:pidusage-tree] -
 Compute a pidusage tree
 
@@ -129,7 +131,6 @@ This project is licensed under the MIT License - see the [LICENSE][license] file
 [github:simonepri]: https://github.com/simonepri
 
 [gh:pidusage-tree]: https://github.com/soyuka/pidusage-tree
-[gh:pidusage-promise]: https://github.com/soyuka/pidusage-promise
 
 [node:cpuUsage]: https://nodejs.org/api/process.html#process_process_cpuusage_previousvalue
 [node:memUsage]: https://nodejs.org/api/process.html#process_process_memoryusage
