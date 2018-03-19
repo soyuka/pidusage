@@ -1,12 +1,24 @@
 ### 2.0
 
-There is no BC break but because the code got refactored a lot and that the default retrieval method has changed we're bumping a major version.
-
 - allow multiple pids
 - remove `advanced` option
-- `start` result is now a `Date` instance
 - don't use `/proc` files anymore but use `ps` instead
 - more tests
+- API change no more `stat` method, module exports a single function
+- no more `unmonitor` method, this is handed internally
+- the default call now returns more data:
+
+```
+{
+  cpu: 10.0,            // percentage (it may happen to be greater than 100%)
+  memory: 357306368,    // bytes
+  ppid: 312,            // PPID
+  pid: 727,             // PID
+  ctime: 867000,        // ms user + system time
+  elapsed: 6650000,     // ms since the start of the process
+  timestamp: 864000000  // ms since epoch
+}
+```
 
 ### 1.2.0
 
