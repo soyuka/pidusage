@@ -77,14 +77,14 @@ console.log(stats)
 
 ## Compatibility
 
-| Property | Linux | FreeBSD | NetBSD | SunOS | macOS | Win | AIX |
-| ---         | --- | --- | --- | --- | --- | --- | --- |
-| `cpu`       | ✅ | ❓ | ❓ | ❓ | ✅ | ℹ️ | ❓ |
-| `memory`    | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ |
-| `pid`       | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ |
-| `ctime`     | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ |
-| `elapsed`   | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ |
-| `timestamp` | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ |
+| Property | Linux | FreeBSD | NetBSD | SunOS | macOS | Win | AIX | Alpine
+| ---         | --- | --- | --- | --- | --- | --- | --- | --- |
+| `cpu`       | ✅ | ❓ | ❓ | ❓ | ✅ | ℹ️ | ❓ | ✅ |
+| `memory`    | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ | ✅ |
+| `pid`       | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ | ✅ |
+| `ctime`     | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ | ✅ |
+| `elapsed`   | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ | ✅ |
+| `timestamp` | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ | ✅ |
 
 ✅ = Working
 ℹ️ = Not Accurate

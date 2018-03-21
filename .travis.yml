@@ -13,3 +13,13 @@ cache:
   - node_modules
 after_success:
   - npm run coverage
+script:
+    - npm test
+matrix:
+    include:
+        - node: '9'
+          env: ALPINE=1
+          services:
+              - docker
+          script:
+              - docker build . -t pidusage && npm run alpine
