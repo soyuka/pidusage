@@ -17,6 +17,10 @@ function pidusage (pids, options, callback) {
     options = {}
   }
 
+  if (options === undefined) {
+    options = {}
+  }
+
   if (typeof callback === 'function') {
     stats(pids, options, callback)
     return
