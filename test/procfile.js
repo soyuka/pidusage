@@ -1,5 +1,8 @@
 import mockery from 'mockery'
 import test from 'ava'
+import os from 'os'
+
+const IS_WIN = os.platform().match(/^win/)
 
 test.before(() => {
   mockery.enable({
@@ -18,6 +21,11 @@ test.after(() => {
 })
 
 test('procfile stat', async t => {
+  if (IS_WIN) {
+    t.pass()
+    return
+  }
+
   var fs = require('fs')
   fs.readFile = function (path, encoding, callback) {
     if (path === '/proc/uptime') {
