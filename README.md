@@ -25,7 +25,7 @@ setInterval(function () {
   pidusage(process.pid, function (err, stats) {
     console.log(stats)
     // => {
-    //   cpu: 10.0,            // percentage (it may happen to be greater than 100%)
+    //   cpu: 10.0,            // percentage (0-100%)
     //   memory: 357306368,    // bytes
     //   ppid: 312,            // PPID
     //   pid: 727,             // PID
@@ -41,7 +41,7 @@ pidusage([727, 1234], function (err, stats) {
   console.log(stats)
   // => {
   //   727: {
-  //     cpu: 10.0,            // percentage
+  //     cpu: 10.0,            // percentage (0-100%)
   //     memory: 357306368,    // bytes
   //     ppid: 312,            // PPID
   //     pid: 727,             // PID
@@ -50,7 +50,7 @@ pidusage([727, 1234], function (err, stats) {
   //     timestamp: 864000000  // ms since epoch
   //   },
   //   1234: {
-  //     cpu: 0.1,             // percentage
+  //     cpu: 0.1,             // percentage (0-100%)
   //     memory: 3846144,      // bytes
   //     ppid: 727,            // PPID
   //     pid: 1234,            // PID
@@ -65,7 +65,7 @@ pidusage([727, 1234], function (err, stats) {
 const stats = await pidusage(process.pid)
 console.log(stats)
 // => {
-//   cpu: 10.0,            // percentage (it may happen to be greater than 100%)
+//   cpu: 10.0,            // percentage (0-100%)
 //   memory: 357306368,    // bytes
 //   ppid: 312,            // PPID
 //   pid: 727,             // PID
@@ -135,4 +135,3 @@ This project is licensed under the MIT License - see the [LICENSE][license] file
 
 [node:cpuUsage]: https://nodejs.org/api/process.html#process_process_cpuusage_previousvalue
 [node:memUsage]: https://nodejs.org/api/process.html#process_process_memoryusage
-

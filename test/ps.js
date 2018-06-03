@@ -38,8 +38,12 @@ test('should parse ps output on Darwin', async t => {
     spawn: () => mocks.spawn(stdout, '', null, 0, null)
   })
   mockery.registerMock('os', {
-    EOL: os.EOL, platform: () => 'darwin', type: () => 'type', release: () => 'release'}
-  )
+    EOL: os.EOL,
+    platform: () => 'darwin',
+    type: () => 'type',
+    release: () => 'release',
+    cpus: () => [os.cpus()[0]]
+  })
 
   const ps = require('../lib/ps')
 
@@ -99,8 +103,12 @@ test('should parse ps output on *nix', async t => {
     spawn: () => mocks.spawn(stdout, '', null, 0, null)
   })
   mockery.registerMock('os', {
-    EOL: os.EOL, platform: () => 'linux', type: () => 'type', release: () => 'release'}
-  )
+    EOL: os.EOL,
+    platform: () => 'linux',
+    type: () => 'type',
+    release: () => 'release',
+    cpus: () => [os.cpus()[0]]
+  })
 
   const ps = require('../lib/ps')
 
