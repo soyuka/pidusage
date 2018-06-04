@@ -43,8 +43,9 @@ test('should work with an array of pids', async t => {
       child.stderr.on('data', d => reject(d.toString()))
       child.on('error', reject)
       child.on('exit', reject)
-    })
-  , 'script not executed')
+    }),
+    'script not executed'
+  )
 
   const pids = [ppid, pid]
   let result
