@@ -41,8 +41,7 @@ test('should parse ps output on Darwin', async t => {
     EOL: os.EOL,
     platform: () => 'darwin',
     type: () => 'type',
-    release: () => 'release',
-    cpus: () => [os.cpus()[0]]
+    release: () => 'release'
   })
 
   const ps = require('../lib/ps')
@@ -106,8 +105,7 @@ test('should parse ps output on *nix', async t => {
     EOL: os.EOL,
     platform: () => 'linux',
     type: () => 'type',
-    release: () => 'release',
-    cpus: () => [os.cpus()[0]]
+    release: () => 'release'
   })
 
   const ps = require('../lib/ps')
