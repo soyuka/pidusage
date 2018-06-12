@@ -66,6 +66,7 @@ test('procfile stat', async t => {
   var m = require('..')
   var stat = await m(10)
   t.is(stat.cpu, 100)
+  t.is(stat.usage, 100)
   t.is(stat.memory, 0)
   t.is(stat.ppid, 0)
   t.is(stat.pid, 10)

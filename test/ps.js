@@ -50,6 +50,7 @@ test('should parse ps output on Darwin', async t => {
   t.deepEqual(result, {
     430: {
       cpu: 3.0,
+      usage: 3.0,
       memory: 5145 * 1024,
       ppid: 1,
       pid: 430,
@@ -59,6 +60,7 @@ test('should parse ps output on Darwin', async t => {
     },
     432: {
       cpu: 0.0,
+      usage: 0.0,
       memory: 2364 * 1024,
       ppid: 430,
       pid: 432,
@@ -68,6 +70,7 @@ test('should parse ps output on Darwin', async t => {
     },
     727: {
       cpu: 10.0,
+      usage: 10.0,
       memory: 348932 * 1024,
       ppid: 1,
       pid: 727,
@@ -77,6 +80,7 @@ test('should parse ps output on Darwin', async t => {
     },
     7166: {
       cpu: 0.1,
+      usage: 0.1,
       memory: 3756 * 1024,
       ppid: 1,
       pid: 7166,
@@ -114,6 +118,7 @@ test('should parse ps output on *nix', async t => {
   t.deepEqual(result, {
     430: {
       cpu: 3.0,
+      usage: 3.0,
       memory: 5145 * 1024,
       ppid: 1,
       pid: 430,
@@ -123,6 +128,7 @@ test('should parse ps output on *nix', async t => {
     },
     432: {
       cpu: 0.0,
+      usage: 0.0,
       memory: 2364 * 1024,
       ppid: 430,
       pid: 432,
@@ -132,6 +138,7 @@ test('should parse ps output on *nix', async t => {
     },
     727: {
       cpu: 10.0,
+      usage: 10.0,
       memory: 348932 * 1024,
       ppid: 1,
       pid: 727,
@@ -141,6 +148,7 @@ test('should parse ps output on *nix', async t => {
     },
     7166: {
       cpu: 0.1,
+      usage: 0.1,
       memory: 3756 * 1024,
       ppid: 1,
       pid: 7166,

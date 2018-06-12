@@ -25,7 +25,8 @@ setInterval(function () {
   pidusage(process.pid, function (err, stats) {
     console.log(stats)
     // => {
-    //   cpu: 10.0,            // percentage (from 0 to 100*vcore)
+    //   cpu: 10.0,            // percentage (0-100%)
+    //   usage: 10.0,          // percentage (from 0 to 100*vcore)
     //   memory: 357306368,    // bytes
     //   ppid: 312,            // PPID
     //   pid: 727,             // PID
@@ -41,7 +42,8 @@ pidusage([727, 1234], function (err, stats) {
   console.log(stats)
   // => {
   //   727: {
-  //     cpu: 10.0,            // percentage (from 0 to 100*vcore)
+  //     cpu: 10.0,            // percentage (0-100%)
+  //     usage: 10.0,          // percentage (from 0 to 100*vcore)
   //     memory: 357306368,    // bytes
   //     ppid: 312,            // PPID
   //     pid: 727,             // PID
@@ -50,7 +52,8 @@ pidusage([727, 1234], function (err, stats) {
   //     timestamp: 864000000  // ms since epoch
   //   },
   //   1234: {
-  //     cpu: 0.1,             // percentage (from 0 to 100*vcore)
+  //     cpu: 0.1,             // percentage (0-100%)
+  //     usage: 0.1,           // percentage (from 0 to 100*vcore)
   //     memory: 3846144,      // bytes
   //     ppid: 727,            // PPID
   //     pid: 1234,            // PID
@@ -65,7 +68,8 @@ pidusage([727, 1234], function (err, stats) {
 const stats = await pidusage(process.pid)
 console.log(stats)
 // => {
-//   cpu: 10.0,            // percentage (from 0 to 100*vcore)
+//   cpu: 10.0,            // percentage (0-100%)
+//   usage: 10.0,          // percentage (from 0 to 100*vcore)
 //   memory: 357306368,    // bytes
 //   ppid: 312,            // PPID
 //   pid: 727,             // PID
@@ -80,6 +84,7 @@ console.log(stats)
 | Property | Linux | FreeBSD | NetBSD | SunOS | macOS | Win | AIX | Alpine
 | ---         | --- | --- | --- | --- | --- | --- | --- | --- |
 | `cpu`       | ✅ | ❓ | ❓ | ❓ | ✅ | ℹ️ | ❓ | ✅ |
+| `usage`     | ✅ | ❓ | ❓ | ❓ | ✅ | ℹ️ | ❓ | ✅ |
 | `memory`    | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ | ✅ |
 | `pid`       | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ | ✅ |
 | `ctime`     | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ | ✅ |
