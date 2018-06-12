@@ -48,6 +48,7 @@ test('should parse wmic output on Windows', async t => {
   t.deepEqual(result, {
     777: {
       cpu: 0,
+      usage: 0,
       memory: 110821376,
       ppid: 0,
       pid: 777,
