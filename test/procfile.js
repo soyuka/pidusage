@@ -27,12 +27,20 @@ test('procfile stat', async t => {
   }
 
   var fs = require('fs')
+  var openCalled = 0
+
+  fs.open = function (path, mode, cb) {
+    openCalled++
+    cb(null, 10)
+  }
+
   fs.readFile = function (path, encoding, callback) {
     if (path === '/proc/uptime') {
       callback(null, '100 0')
-      return
     }
+  }
 
+  fs.read = function (fd, buffer, offset, length, position, callback) {
     // proc/<pid>/stat
     var infos = '0 (test)'
     for (var i = 0; i < 22; i++) {
@@ -42,7 +50,9 @@ test('procfile stat', async t => {
         infos += ' 0'
       }
     }
-    callback(null, infos)
+
+    buffer.write(infos)
+    callback(null, infos.length, buffer)
   }
 
   fs.existsSync = function (path) {
@@ -65,7 +75,7 @@ test('procfile stat', async t => {
 
   var m = require('..')
   var stat = await m(10)
-  t.is(stat.cpu, 100)
+  t.is(stat.cpu, 0)
   t.is(stat.memory, 0)
   t.is(stat.ppid, 0)
   t.is(stat.pid, 10)
@@ -73,4 +83,7 @@ test('procfile stat', async t => {
   t.false(isNaN(stat.elapsed), 'elapsed')
   t.is(typeof stat.timestamp, 'number', 'timestamp')
   t.false(isNaN(stat.timestamp), 'timestamp')
+
+  stat = await m(10)
+  t.is(openCalled, 1)
 })

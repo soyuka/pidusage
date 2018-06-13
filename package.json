@@ -22,7 +22,7 @@
   },
   "scripts": {
     "lint": "standard",
-    "test": "standard &&nyc ava -m \"!*benchmark*\"",
+    "test": "standard && nyc ava -m \"!*benchmark*\"",
     "alpine": "docker run -v $(pwd):/var/pidusage pidusage:latest npm test",
     "coverage": "codecov",
     "bench": "ava -m \"*benchmark*\""
