@@ -1,7 +1,7 @@
 sudo: false
 language: node_js
 node_js:
-  - '10'
+  - '9'
   - '8'
   - '6'
   - '4'
@@ -17,7 +17,7 @@ script:
     - npm test
 matrix:
     include:
-        - node: '10'
+        - node: '9'
           env: ALPINE=1
           services:
               - docker
