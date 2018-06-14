@@ -52,46 +52,46 @@ async function execute (childs, pidno, times, options = {}) {
 test.serial('should execute the benchmark', async t => {
   const childs = await create(100)
 
-  let time = await execute(childs, 1, 100)
+  let time = await execute(childs, 1, 100, {usePs: true})
   t.log(`1 pid 100 times done in ${time.toFixed(3)} ms (${(1000 * 100 / time).toFixed(3)} op/s)`)
 
-  time = await execute(childs, 1, 100, {useProcFiles: true})
+  time = await execute(childs, 1, 100)
   t.log(`(procfile) 1 pid 100 times done in ${time.toFixed(3)} ms (${(1000 * 100 / time).toFixed(3)} op/s)`)
 
-  time = await execute(childs, 2, 100)
+  time = await execute(childs, 2, 100, {usePs: true})
   t.log(`2 pid 100 times done in ${time.toFixed(3)} ms (${(1000 * 100 / time).toFixed(3)} op/s)`)
 
-  time = await execute(childs, 2, 100, {useProcFiles: true})
+  time = await execute(childs, 2, 100)
   t.log(`(procfile) 2 pid 100 times done in ${time.toFixed(3)} ms (${(1000 * 100 / time).toFixed(3)} op/s)`)
 
-  time = await execute(childs, 5, 100)
+  time = await execute(childs, 5, 100, {usePs: true})
   t.log(`5 pid 100 times done in ${time.toFixed(3)} ms (${(1000 * 100 / time).toFixed(3)} op/s)`)
 
-  time = await execute(childs, 5, 100, {useProcFiles: true})
+  time = await execute(childs, 5, 100)
   t.log(`(procfile) 5 pid 100 times done in ${time.toFixed(3)} ms (${(1000 * 100 / time).toFixed(3)} op/s)`)
 
-  time = await execute(childs, 10, 100)
+  time = await execute(childs, 10, 100, {usePs: true})
   t.log(`10 pid 100 times done in ${time.toFixed(3)} ms (${(1000 * 100 / time).toFixed(3)} op/s)`)
 
-  time = await execute(childs, 10, 100, {useProcFiles: true})
+  time = await execute(childs, 10, 100)
   t.log(`(procfile) 10 pid 100 times done in ${time.toFixed(3)} ms (${(1000 * 100 / time).toFixed(3)} op/s)`)
 
-  time = await execute(childs, 25, 100)
+  time = await execute(childs, 25, 100, {usePs: true})
   t.log(`25 pid 100 times done in ${time.toFixed(3)} ms (${(1000 * 100 / time).toFixed(3)} op/s)`)
 
-  time = await execute(childs, 25, 100, {useProcFiles: true})
+  time = await execute(childs, 25, 100)
   t.log(`(procfile) 25 pid 100 times done in ${time.toFixed(3)} ms (${(1000 * 100 / time).toFixed(3)} op/s)`)
 
-  time = await execute(childs, 50, 100)
+  time = await execute(childs, 50, 100, {usePs: true})
   t.log(`50 pid 100 times done in ${time.toFixed(3)} ms (${(1000 * 100 / time).toFixed(3)} op/s)`)
 
-  time = await execute(childs, 50, 100, {useProcFiles: true})
+  time = await execute(childs, 50, 100)
   t.log(`(procfile) 50 pid 100 times done in ${time.toFixed(3)} ms (${(1000 * 100 / time).toFixed(3)} op/s)`)
 
-  time = await execute(childs, 100, 100)
+  time = await execute(childs, 100, 100, {usePs: true})
   t.log(`100 pid 100 times done in ${time.toFixed(3)} ms (${(1000 * 100 / time).toFixed(3)} op/s)`)
 
-  time = await execute(childs, 100, 100, {useProcFiles: true})
+  time = await execute(childs, 100, 100)
   t.log(`(procfile) 100 pid 100 times done in ${time.toFixed(3)} ms (${(1000 * 100 / time).toFixed(3)} op/s)`)
 
   await destroy(childs)

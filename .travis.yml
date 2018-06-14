@@ -17,7 +17,7 @@ script:
     - npm test
 matrix:
     include:
-        - node: '9'
+        - node: '10'
           env: ALPINE=1
           services:
               - docker
