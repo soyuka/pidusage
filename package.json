@@ -1,6 +1,6 @@
 {
   "name": "pidusage",
-  "version": "2.0.9",
+  "version": "2.0.10",
   "description": "Cross-platform process cpu % and memory usage of a PID",
   "license": "MIT",
   "homepage": "https://github.com/soyuka/pidusage",
