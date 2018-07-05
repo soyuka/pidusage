@@ -30,10 +30,10 @@
   "dependencies": {},
   "devDependencies": {
     "ava": "*",
-    "codecov": "^3.0.0",
+    "codecov": "^3.0.2",
     "mockdate": "^2.0.2",
     "mockery": "2.1.0",
-    "nyc": "*",
+    "nyc": "^13.0.0",
     "pify": "^3.0.0",
     "standard": "*",
     "string-to-stream": "^1.1.0",
