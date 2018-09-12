@@ -35,3 +35,4 @@ function pidusage (pids, options, callback) {
 }
 
 module.exports = pidusage
+module.exports.clear = require('./lib/history').clear

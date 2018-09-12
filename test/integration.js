@@ -1,8 +1,7 @@
-import {spawn} from 'child_process'
-
+import {spawn, fork} from 'child_process'
 import test from 'ava'
-
 import m from '..'
+import os from 'os'
 
 test('should work with a single pid', async t => {
   const pid = process.pid
@@ -77,6 +76,8 @@ test('should work with an array of pids', async t => {
     t.is(typeof result[pid].timestamp, 'number', 'timestamp')
     t.false(isNaN(result[pid].timestamp), 'timestamp')
   })
+
+  m.clear()
 })
 
 test('should throw an error if no pid is provided', async t => {
@@ -109,6 +110,34 @@ test('should throw an error if the pid does not exists', async t => {
 
 test('should throw an error if the pid is too large', async t => {
   await t.throws(m(99999999))
+})
+
+test.cb('should exit right away because we cleaned up the event loop', t => {
+  if (os.platform().match(/^win/)) return t.end()
+
+  const start = Date.now()
+  const f = fork(`${__dirname}/fixtures/eventloop`, [1])
+
+  f.on('exit', function (code) {
+    const end = Date.now()
+    t.true(end - start < 1000)
+    t.is(code, 0)
+    t.end()
+  })
+})
+
+test.cb('should exit after a few seconds because the event loop is busy with history', t => {
+  if (os.platform().match(/^win/)) return t.end()
+
+  const start = Date.now()
+  const f = fork(`${__dirname}/fixtures/eventloop`)
+
+  f.on('exit', function (code) {
+    const end = Date.now()
+    t.true(end - start > 1000)
+    t.is(code, 0)
+    t.end()
+  })
 })
 
 test.cb("should use the callback if it's provided", t => {

@@ -110,6 +110,10 @@ Get pid informations.
 | pids | <code>Number</code> \| <code>Array.&lt;Number&gt;</code> \| <code>String</code> \| <code>Array.&lt;String&gt;</code> | A pid or a list of pids. |
 | [callback] | <code>function</code> | Called when the statistics are ready. If not provided a promise is returned instead. |
 
+### pidusage.clear()
+
+If needed this function can be used to clear the event loop. Indeed, we're registering an interval to free up the in-memory metrics. By calling this, it will clear this interval and all delete all in-memory data.
+
 ## Related
 - [pidusage-tree][gh:pidusage-tree] -
 Compute a pidusage tree
