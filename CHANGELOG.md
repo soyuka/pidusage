@@ -1,3 +1,8 @@
+### 2.0.17
+
+- allow to manually clear the event loop when needed it'll clear itself after a given timeout (default to `60000ms` but you can specify it with the `maxage` option, [see this file](https://github.com/soyuka/pidusage/blob/master/test/fixtures/eventloop.js#L3)) [1740a4f](https://github.com/soyuka/pidusage/commit/2779e520d3414a8318c86279cf14bebae3264604)
+- fix elapsed and timestamp calculations on linux [#80](https://github.com/soyuka/pidusage/issues/80) [e5e2b01](https://github.com/soyuka/pidusage/commit/081984a04bc97ad8abd82315f936861cce1df0d6)
+
 ### 2.0.16
 
 - fix ps on darwin, centisenconds multiplier was wrong and was giving bad cpu usage values [bcda538](https://github.com/soyuka/pidusage/commit/bcda538b76498c6d4bcaa36520238990554929c5)
