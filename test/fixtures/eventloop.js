@@ -1,6 +1,6 @@
 var pidusage = require('../../')
 
-pidusage(process.pid, {maxage: 1500}, function (err, stat) {
+pidusage(process.pid, { maxage: 1500 }, function (err, stat) {
   if (err) {
     throw err
   }

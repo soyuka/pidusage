@@ -1,4 +1,4 @@
-import {spawn, fork} from 'child_process'
+import { spawn, fork } from 'child_process'
 import test from 'ava'
 import m from '..'
 import os from 'os'
@@ -31,7 +31,7 @@ test('should work with an array of pids', async t => {
   const child = spawn(
     'node',
     ['-e', 'console.log(123); var c = 0; while(true) {c = Math.pow(c, c);}'],
-    {windowsHide: true}
+    { windowsHide: true }
   )
   const ppid = process.pid
   const pid = child.pid
