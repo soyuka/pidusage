@@ -6,7 +6,7 @@ import mockdate from 'mockdate'
 
 import pify from 'pify'
 
-import mocks from './helpers/mocks'
+import mocks from './helpers/_mocks'
 
 const timeout = ms => new Promise((resolve, reject) => setTimeout(resolve, ms))
 

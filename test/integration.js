@@ -36,14 +36,14 @@ test('should work with an array of pids', async t => {
   const ppid = process.pid
   const pid = child.pid
 
-  await t.notThrows(
+  await t.notThrows(() =>
     new Promise((resolve, reject) => {
       child.stdout.on('data', d => resolve(d.toString()))
       child.stderr.on('data', d => reject(d.toString()))
       child.on('error', reject)
       child.on('exit', reject)
     }),
-    'script not executed'
+  'script not executed'
   )
 
   const pids = [ppid, pid]
@@ -81,42 +81,42 @@ test('should work with an array of pids', async t => {
 })
 
 test('should throw an error if no pid is provided', async t => {
-  const err = await t.throws(m([]))
+  const err = await t.throwsAsync(() => m([]))
   t.is(err.message, 'You must provide at least one pid')
 })
 
 test('should throw an error if one of the pid is invalid', async t => {
-  let err = await t.throws(m(null))
+  let err = await t.throwsAsync(() => m(null))
   t.is(err.message, 'One of the pids provided is invalid')
-  err = await t.throws(m([null]))
+  err = await t.throwsAsync(() => m([null]))
   t.is(err.message, 'One of the pids provided is invalid')
-  err = await t.throws(m(['invalid']))
+  err = await t.throwsAsync(() => m(['invalid']))
   t.is(err.message, 'One of the pids provided is invalid')
-  err = await t.throws(m(-1))
+  err = await t.throwsAsync(() => m(-1))
   t.is(err.message, 'One of the pids provided is invalid')
-  err = await t.throws(m([-1]))
+  err = await t.throwsAsync(() => m([-1]))
   t.is(err.message, 'One of the pids provided is invalid')
 })
 
 test('should not throw an error if one of the pids does not exists', async t => {
-  await t.notThrows(m([process.pid, 65535]))
-  await t.notThrows(m([65535, process.pid]))
+  await t.notThrows(() => m([process.pid, 65535]))
+  await t.notThrows(() => m([65535, process.pid]))
 })
 
 test('should throw an error if the pid does not exists', async t => {
-  const err = await t.throws(m([65535]))
+  const err = await t.throwsAsync(() => m([65535]))
   t.is(err.message, 'No maching pid found')
 })
 
 test('should throw an error if the pid is too large', async t => {
-  await t.throws(m(99999999))
+  await t.throwsAsync(() => m(99999999))
 })
 
 test.cb('should exit right away because we cleaned up the event loop', t => {
   if (os.platform().match(/^win/)) return t.end()
 
   const start = Date.now()
-  const f = fork(`${__dirname}/fixtures/eventloop`, [1])
+  const f = fork(`${__dirname}/fixtures/_eventloop`, [1])
 
   f.on('exit', function (code) {
     const end = Date.now()
@@ -130,7 +130,7 @@ test.cb('should exit after a few seconds because the event loop is busy with his
   if (os.platform().match(/^win/)) return t.end()
 
   const start = Date.now()
-  const f = fork(`${__dirname}/fixtures/eventloop`)
+  const f = fork(`${__dirname}/fixtures/_eventloop`)
 
   f.on('exit', function (code) {
     const end = Date.now()
