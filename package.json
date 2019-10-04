@@ -18,7 +18,7 @@
     "index.js"
   ],
   "engines": {
-    "node": ">=4"
+    "node": ">=8"
   },
   "scripts": {
     "lint": "standard",
@@ -31,13 +31,13 @@
     "safe-buffer": "^5.1.2"
   },
   "devDependencies": {
-    "ava": "*",
+    "ava": "^2.4.0",
     "codecov": "^3.0.2",
     "mockdate": "^2.0.2",
-    "mockery": "2.1.0",
-    "nyc": "13.0.0",
+    "mockery": "^2.1.0",
+    "nyc": "^13.0.0",
     "pify": "^3.0.0",
-    "standard": "*",
+    "standard": "^14.3.1",
     "string-to-stream": "^1.1.0",
     "through": "^2.3.8",
     "time-span": "^2.0.0"

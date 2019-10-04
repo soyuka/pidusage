@@ -1,10 +1,9 @@
 sudo: false
 language: node_js
 node_js:
-  - '9'
+  - '12'
+  - '10'
   - '8'
-  - '6'
-  - '4'
 
 os:
   - linux
@@ -15,10 +14,10 @@ cache:
 after_success:
   - npm run coverage
 script:
-    - npm test
+  - npm test
 matrix:
     include:
-        - node: '9'
+        - node: '10'
           env: ALPINE=1
           services:
               - docker
