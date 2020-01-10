@@ -105,7 +105,7 @@ test('should not throw an error if one of the pids does not exists', async t => 
 
 test('should throw an error if the pid does not exists', async t => {
   const err = await t.throwsAsync(() => m([65535]))
-  t.is(err.message, 'No maching pid found')
+  t.is(err.message, 'No matching pid found')
 })
 
 test('should throw an error if the pid is too large', async t => {
