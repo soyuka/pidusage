@@ -126,7 +126,7 @@ test.cb('should exit right away because we cleaned up the event loop', t => {
   })
 })
 
-test.cb('should exit after a few seconds because the event loop is busy with history', t => {
+test.cb('should exit right away because the event loop ignores history', t => {
   if (os.platform().match(/^win/)) return t.end()
 
   const start = Date.now()
@@ -134,7 +134,7 @@ test.cb('should exit after a few seconds because the event loop is busy with his
 
   f.on('exit', function (code) {
     const end = Date.now()
-    t.true(end - start > 1000)
+    t.true(end - start < 1000)
     t.is(code, 0)
     t.end()
   })

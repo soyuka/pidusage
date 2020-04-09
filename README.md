@@ -112,7 +112,7 @@ Get pid informations.
 
 ### pidusage.clear()
 
-If needed this function can be used to clear the event loop. Indeed, we're registering an interval to free up the in-memory metrics. By calling this, it will clear this interval and all delete all in-memory data.
+If needed this function can be used to delete all in-memory metrics and clear the event loop. This is not necessary before exiting as the interval we're registring does not hold up the event loop.
 
 ## Related
 - [pidusage-tree][gh:pidusage-tree] -
