@@ -33,6 +33,7 @@ function compute(cb) {
     //   elapsed: 6650000,     // ms since the start of the process
     //   timestamp: 864000000  // ms since epoch
     // }
+    cb()
   })
 }
 
