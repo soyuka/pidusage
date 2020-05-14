@@ -20,8 +20,8 @@ Please note that if you need to check a Node.JS script process cpu and memory us
 ```js
 var pidusage = require('pidusage')
 
-// Compute statistics every second:
-setInterval(function () {
+// Avoid using setInterval as they could overlap with asynchronous processing
+function compute(cb) {
   pidusage(process.pid, function (err, stats) {
     console.log(stats)
     // => {
@@ -34,7 +34,16 @@ setInterval(function () {
     //   timestamp: 864000000  // ms since epoch
     // }
   })
-}, 1000)
+}
+
+// Compute statistics every second:
+function interval(time) {
+  setTimeout(function() {
+    compute(function() {
+      interval(time)
+    })
+  }, time)
+}
 
 // It supports also multiple pids
 pidusage([727, 1234], function (err, stats) {
@@ -73,6 +82,20 @@ console.log(stats)
 //   elapsed: 6650000,     // ms since the start of the process
 //   timestamp: 864000000  // ms since epoch
 // }
+
+// Above example using async/await
+const compute = async () => {
+  const stats = await pidusage(process.pid)
+  // do something
+}
+
+// Compute statistics every second:
+const interval = async (time) => {
+  setTimeout(async () => {
+    await compute()
+    interval(time)
+  }, time)
+}
 ```
 
 ## Compatibility
