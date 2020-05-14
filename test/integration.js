@@ -1,7 +1,8 @@
-import { spawn, fork } from 'child_process'
-import test from 'ava'
-import m from '..'
-import os from 'os'
+const { spawn, fork } = require('child_process')
+const test = require('ava')
+const os = require('os')
+
+const m = require('..')
 
 test('should work with a single pid', async t => {
   const pid = process.pid

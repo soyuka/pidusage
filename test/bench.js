@@ -1,9 +1,8 @@
-import { spawn } from 'child_process'
+const { spawn } = require('child_process')
+const test = require('ava')
+const tspan = require('time-span')
 
-import test from 'ava'
-import tspan from 'time-span'
-
-import m from '..'
+const m = require('..')
 
 async function create (pidno) {
   const code = `

@@ -1,12 +1,10 @@
-import os from 'os'
+const mockery = require('mockery')
+const test = require('ava')
+const os = require('os')
+const mockdate = require('mockdate')
+const pify = require('pify')
 
-import test from 'ava'
-import mockery from 'mockery'
-import mockdate from 'mockdate'
-
-import pify from 'pify'
-
-import mocks from './helpers/_mocks'
+const mocks = require('./helpers/_mocks')
 
 test.before(() => {
   mockery.enable({

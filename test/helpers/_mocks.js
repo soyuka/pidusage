@@ -1,6 +1,6 @@
-import EventEmitter from 'events'
-import streamify from 'string-to-stream'
-import through from 'through'
+const EventEmitter = require('events')
+const streamify = require('string-to-stream')
+const through = require('through')
 
 module.exports = {
   spawn: (stdout, stderr, error, code, signal) => {

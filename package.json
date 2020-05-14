@@ -31,11 +31,11 @@
     "safe-buffer": "^5.1.2"
   },
   "devDependencies": {
-    "ava": "^2.4.0",
+    "ava": "^3.8.2",
     "codecov": "^3.0.2",
     "mockdate": "^2.0.5",
     "mockery": "^2.1.0",
-    "nyc": "^13.0.0",
+    "nyc": "^15.0.1",
     "pify": "^3.0.0",
     "standard": "^14.3.4",
     "string-to-stream": "^1.1.1",

@@ -1,6 +1,6 @@
-import mockery from 'mockery'
-import test from 'ava'
-import os from 'os'
+const mockery = require('mockery')
+const test = require('ava')
+const os = require('os')
 
 const IS_WIN = os.platform().match(/^win/)
 
