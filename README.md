@@ -20,31 +20,19 @@ Please note that if you need to check a Node.JS script process cpu and memory us
 ```js
 var pidusage = require('pidusage')
 
-// Avoid using setInterval as they could overlap with asynchronous processing
-function compute(cb) {
-  pidusage(process.pid, function (err, stats) {
-    console.log(stats)
-    // => {
-    //   cpu: 10.0,            // percentage (from 0 to 100*vcore)
-    //   memory: 357306368,    // bytes
-    //   ppid: 312,            // PPID
-    //   pid: 727,             // PID
-    //   ctime: 867000,        // ms user + system time
-    //   elapsed: 6650000,     // ms since the start of the process
-    //   timestamp: 864000000  // ms since epoch
-    // }
-    cb()
-  })
-}
-
-// Compute statistics every second:
-function interval(time) {
-  setTimeout(function() {
-    compute(function() {
-      interval(time)
-    })
-  }, time)
-}
+pidusage(process.pid, function (err, stats) {
+  console.log(stats)
+  // => {
+  //   cpu: 10.0,            // percentage (from 0 to 100*vcore)
+  //   memory: 357306368,    // bytes
+  //   ppid: 312,            // PPID
+  //   pid: 727,             // PID
+  //   ctime: 867000,        // ms user + system time
+  //   elapsed: 6650000,     // ms since the start of the process
+  //   timestamp: 864000000  // ms since epoch
+  // }
+  cb()
+})
 
 // It supports also multiple pids
 pidusage([727, 1234], function (err, stats) {
@@ -84,6 +72,34 @@ console.log(stats)
 //   timestamp: 864000000  // ms since epoch
 // }
 
+// Avoid using setInterval as they could overlap with asynchronous processing
+function compute(cb) {
+  pidusage(process.pid, function (err, stats) {
+    console.log(stats)
+    // => {
+    //   cpu: 10.0,            // percentage (from 0 to 100*vcore)
+    //   memory: 357306368,    // bytes
+    //   ppid: 312,            // PPID
+    //   pid: 727,             // PID
+    //   ctime: 867000,        // ms user + system time
+    //   elapsed: 6650000,     // ms since the start of the process
+    //   timestamp: 864000000  // ms since epoch
+    // }
+    cb()
+  })
+}
+
+function interval(time) {
+  setTimeout(function() {
+    compute(function() {
+      interval(time)
+    })
+  }, time)
+}
+
+// Compute statistics every second:
+interval(1000)
+
 // Above example using async/await
 const compute = async () => {
   const stats = await pidusage(process.pid)
@@ -97,6 +113,8 @@ const interval = async (time) => {
     interval(time)
   }, time)
 }
+
+interval(1000)
 ```
 
 ## Compatibility
