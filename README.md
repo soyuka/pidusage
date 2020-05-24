@@ -136,6 +136,12 @@ interval(1000)
 Please if your platform is not supported or if you have reported wrong readings
 [file an issue][new issue].
 
+By default, pidusage will use `procfile` parsing on most unix systems. If you want to use `ps` instead use the `usePs` option:
+
+```
+pidusage(pid, {usePs: true})
+```
+
 ## API
 
 <a name="pidusage"></a>
