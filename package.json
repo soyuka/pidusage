@@ -28,14 +28,14 @@
     "bench": "ava -m \"*benchmark*\""
   },
   "dependencies": {
-    "safe-buffer": "^5.1.2"
+    "safe-buffer": "^5.2.1"
   },
   "devDependencies": {
-    "ava": "^3.8.2",
-    "codecov": "^3.0.2",
+    "ava": "^3.10.1",
+    "codecov": "^3.7.0",
     "mockdate": "^2.0.5",
     "mockery": "^2.1.0",
-    "nyc": "^15.0.1",
+    "nyc": "^15.1.0",
     "pify": "^3.0.0",
     "standard": "^14.3.4",
     "string-to-stream": "^1.1.1",

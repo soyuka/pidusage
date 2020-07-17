@@ -1,4 +1,4 @@
-const { spawn, fork } = require('child_process')
+const { spawn } = require('child_process')
 const test = require('ava')
 const os = require('os')
 
@@ -107,22 +107,19 @@ test('should not throw an error if one of the pids does not exists', async t => 
 test('should throw an error if the pid does not exists', async t => {
   const err = await t.throwsAsync(() => m([65535]))
   t.is(err.message, 'No matching pid found')
+  t.is(err.code, 'ENOENT')
 })
 
 test('should throw an error if the pid is too large', async t => {
-  await t.throwsAsync(() => m(99999999))
+  await t.throwsAsync(async () => m(99999999))
 })
 
 test.cb('should exit right away because we cleaned up the event loop', t => {
   if (os.platform().match(/^win/)) return t.end()
 
-  const start = Date.now()
-  const f = fork(`${__dirname}/fixtures/_eventloop`, [1])
-
-  f.on('exit', function (code) {
-    const end = Date.now()
-    t.true(end - start < 1000)
-    t.is(code, 0)
+  process.clear_pidusage = '1'
+  require(`${__dirname}/fixtures/_eventloop`)
+  process.nextTick(() => {
     t.end()
   })
 })
@@ -130,17 +127,13 @@ test.cb('should exit right away because we cleaned up the event loop', t => {
 test.cb('should exit right away because the event loop ignores history', t => {
   if (os.platform().match(/^win/)) return t.end()
 
-  const start = Date.now()
-  const f = fork(`${__dirname}/fixtures/_eventloop`)
-
-  f.on('exit', function (code) {
-    const end = Date.now()
-    t.true(end - start < 1000)
-    t.is(code, 0)
+  process.clear_pidusage = '0'
+  require(`${__dirname}/fixtures/_eventloop`)
+  process.nextTick(() => {
     t.end()
   })
 })
 
 test.cb("should use the callback if it's provided", t => {
-  m(process.pid, t.end)
+  m(process.pid, () => t.end())
 })
