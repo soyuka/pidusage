@@ -156,7 +156,17 @@ Get pid informations.
 | Param | Type | Description |
 | --- | --- | --- |
 | pids | <code>Number</code> \| <code>Array.&lt;Number&gt;</code> \| <code>String</code> \| <code>Array.&lt;String&gt;</code> | A pid or a list of pids. |
+| [options] | <code>object</code> | Options object. See the table below. |
 | [callback] | <code>function</code> | Called when the statistics are ready. If not provided a promise is returned instead. |
+
+### options
+
+Setting the options programatically will override environment variables
+
+| Param | Type | Environment variable | Default | Description |
+| --- | --- | --- | --- | --- |
+| [usePs] | <code>boolean</code> | `PIDUSAGE_USE_PS`| `false` | When true uses `ps` instead of proc files to fetch process information |
+| [maxage] | <code>number</code> | `PIDUSAGE_MAXAGE`| `60000` | Max age of a process on history. |
 
 ### pidusage.clear()
 
