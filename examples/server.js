@@ -1,12 +1,12 @@
-var http = require('http')
-var pidusage = require('../')
+const http = require('http')
+const pidusage = require('../')
 
 http.createServer(function (req, res) {
   res.writeHead(200)
   res.end('hello world\n')
 }).listen(8020)
 
-var interval = setInterval(function () {
+const interval = setInterval(function () {
   pidusage(process.pid, function (err, stat) {
     if (err) {
       throw err

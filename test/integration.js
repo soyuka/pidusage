@@ -1,6 +1,7 @@
 const { spawn } = require('child_process')
 const test = require('ava')
 const os = require('os')
+const path = require('path')
 
 const m = require('..')
 
@@ -118,7 +119,7 @@ test.cb('should exit right away because we cleaned up the event loop', t => {
   if (os.platform().match(/^win/)) return t.end()
 
   process.clear_pidusage = '1'
-  require(`${__dirname}/fixtures/_eventloop`)
+  require(path.join(__dirname, '/fixtures/_eventloop'))
   process.nextTick(() => {
     t.end()
   })
@@ -128,7 +129,7 @@ test.cb('should exit right away because the event loop ignores history', t => {
   if (os.platform().match(/^win/)) return t.end()
 
   process.clear_pidusage = '0'
-  require(`${__dirname}/fixtures/_eventloop`)
+  require(path.join(__dirname, '/fixtures/_eventloop'))
   process.nextTick(() => {
     t.end()
   })
@@ -136,4 +137,9 @@ test.cb('should exit right away because the event loop ignores history', t => {
 
 test.cb("should use the callback if it's provided", t => {
   m(process.pid, () => t.end())
+})
+
+process.on('unhandledException', (e) => {
+  console.error(e)
+  process.exit(1)
 })

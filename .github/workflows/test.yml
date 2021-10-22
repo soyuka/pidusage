@@ -1,0 +1,32 @@
+name: linux
+
+on:
+  push:
+    branches: '*'
+  pull_request:
+    branches: '*'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [ '10', '12', '14', '16' ]
+    name: Test Node ${{ matrix.node }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm install
+      - run: npm test
+  coverage:
+    runs-on: ubuntu-latest
+    name: Test coverage
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup node
+        uses: actions/setup-node@v2
+      - run: npm install
+      - run: npm run coverage

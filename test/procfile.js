@@ -26,8 +26,8 @@ test('procfile stat', async t => {
     return
   }
 
-  var fs = require('fs')
-  var openCalled = 0
+  const fs = require('fs')
+  let openCalled = 0
 
   fs.open = function (path, mode, cb) {
     openCalled++
@@ -42,8 +42,8 @@ test('procfile stat', async t => {
 
   fs.read = function (fd, buffer, offset, length, position, callback) {
     // proc/<pid>/stat
-    var infos = '0 (test)'
-    for (var i = 0; i < 22; i++) {
+    let infos = '0 (test)'
+    for (let i = 0; i < 22; i++) {
       if (i === 12) {
         infos += ' ' + 10000 // currentStime 10000 * clockTick
       } else {
@@ -60,7 +60,7 @@ test('procfile stat', async t => {
     return false
   }
 
-  var os = require('os')
+  const os = require('os')
   os.platform = function () { return 'linux' }
 
   mockery.registerMock('os', os)
@@ -73,8 +73,8 @@ test('procfile stat', async t => {
     })
   })
 
-  var m = require('..')
-  var stat = await m(10)
+  const m = require('..')
+  let stat = await m(10)
   t.is(stat.cpu, 0)
   t.is(stat.memory, 0)
   t.is(stat.ppid, 0)

@@ -18,12 +18,11 @@
     "index.js"
   ],
   "engines": {
-    "node": ">=8"
+    "node": ">=10"
   },
   "scripts": {
     "lint": "standard",
     "test": "nyc ava -m \"!*benchmark*\"",
-    "alpine": "docker run -v $(pwd):/var/pidusage pidusage:latest npm test",
     "coverage": "codecov",
     "bench": "ava -m \"*benchmark*\""
   },
@@ -37,7 +36,7 @@
     "mockery": "^2.1.0",
     "nyc": "^15.1.0",
     "pify": "^3.0.0",
-    "standard": "^14.3.4",
+    "standard": "^16.0.4",
     "string-to-stream": "^1.1.1",
     "through": "^2.3.8",
     "time-span": "^2.0.0"
