@@ -1,6 +1,6 @@
 'use strict'
 
-var stats = require('./lib/stats')
+const stats = require('./lib/stats')
 
 /**
  * Get pid informations.

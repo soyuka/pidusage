@@ -1,14 +1,14 @@
-var pusage = require('../')
+const pusage = require('../')
 
 // stress test to compare with top or another tool
 console.log('This is my PID: %s', process.pid)
 
 // classic "drop somewhere"... yeah I'm a lazy guy
-var formatBytes = function (bytes, precision) {
-  var kilobyte = 1024
-  var megabyte = kilobyte * 1024
-  var gigabyte = megabyte * 1024
-  var terabyte = gigabyte * 1024
+const formatBytes = function (bytes, precision) {
+  const kilobyte = 1024
+  const megabyte = kilobyte * 1024
+  const gigabyte = megabyte * 1024
+  const terabyte = gigabyte * 1024
 
   if ((bytes >= 0) && (bytes < kilobyte)) {
     return bytes + ' B   '
@@ -25,17 +25,17 @@ var formatBytes = function (bytes, precision) {
   }
 }
 
-var i = 0
-var bigMemoryLeak = []
+let i = 0
+const bigMemoryLeak = []
 
-var stress = function (cb) {
-  var j = 500
-  var arr = []
+const stress = function (cb) {
+  let j = 500
+  const arr = []
 
   while (j--) {
     arr[j] = []
 
-    for (var k = 0; k < 1000; k++) {
+    for (let k = 0; k < 1000; k++) {
       arr[j][k] = { lorem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum non odio venenatis, pretium ligula nec, fringilla ipsum. Sed a erat et sem blandit dignissim. Pellentesque sollicitudin felis eu mattis porta. Nullam nec nibh nisl. Phasellus convallis vulputate massa vitae fringilla. Etiam facilisis lectus in odio lacinia rutrum. Praesent facilisis vitae urna a suscipit. Aenean lacinia blandit lorem, et ullamcorper metus sagittis faucibus. Nam porta eros nisi, at adipiscing quam varius eu. Vivamus sed sem quis lorem varius posuere ut quis elit.' }
     }
   }
@@ -62,7 +62,7 @@ var stress = function (cb) {
   })
 }
 
-var interval = function () {
+const interval = function () {
   return setTimeout(function () {
     stress(function (err, stop) {
       if (err) {

@@ -1,4 +1,4 @@
-var pidusage = require('../../')
+const pidusage = require('../../')
 
 pidusage(process.pid, { maxage: 1500 }, function (err, stat) {
   if (err) {

@@ -33,7 +33,7 @@ async function destroy (childs) {
 }
 
 async function execute (childs, pidno, times, options = {}) {
-  var pids = childs.map(child => child.pid).slice(0, pidno)
+  const pids = childs.map(child => child.pid).slice(0, pidno)
 
   const end = tspan()
   try {
