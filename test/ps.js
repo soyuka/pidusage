@@ -153,3 +153,22 @@ test('should parse ps output on *nix', async t => {
   // mockery.deregisterMock('child_process')
   // mockery.deregisterMock('os')
 })
+
+test('should be able to set usePs from env var', async t => {
+  let usePsFromStats
+
+  mockery.registerMock('./lib/stats', (_, options) => {
+    usePsFromStats = !!options.usePs
+  })
+
+  const beforeValue = process.env.PIDUSAGE_USE_PS
+  process.env.PIDUSAGE_USE_PS = '1'
+
+  const pidusage = require('../')
+  pidusage(1, () => {})
+
+  t.is(usePsFromStats, true)
+
+  process.env.PIDUSAGE_USE_PS = beforeValue
+  mockery.deregisterMock('./lib/stats')
+})

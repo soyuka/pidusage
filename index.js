@@ -21,6 +21,11 @@ function pidusage (pids, options, callback) {
     options = {}
   }
 
+  options = Object.assign({
+    usePs: process.env.PIDUSAGE_USE_PS,
+    maxage: process.env.PIDUSAGE_MAXAGE
+  }, options)
+
   if (typeof callback === 'function') {
     stats(pids, options, callback)
     return
