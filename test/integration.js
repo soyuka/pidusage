@@ -137,3 +137,8 @@ test.cb('should exit right away because the event loop ignores history', t => {
 test.cb("should use the callback if it's provided", t => {
   m(process.pid, () => t.end())
 })
+
+process.on('unhandledException', (e) => {
+  console.error(e)
+  process.exit(1)
+})
