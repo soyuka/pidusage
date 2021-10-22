@@ -1,3 +1,10 @@
+### 3.0
+
+- removes node 8 support
+- add z/OS (os390) support
+- environment variables to configure pidusage (`PIDUSAGE_USE_PS`, `PIDUSAGE_MAXAGE`, `PIDUSAGE_SILENT`)
+- use a default Date when `uptime` returns `undefined`
+
 ### 2.0.17
 
 - allow to manually clear the event loop when needed it'll clear itself after a given timeout (default to `60000ms` but you can specify it with the `maxage` option, [see this file](https://github.com/soyuka/pidusage/blob/master/test/fixtures/eventloop.js#L3)) [1740a4f](https://github.com/soyuka/pidusage/commit/2779e520d3414a8318c86279cf14bebae3264604)
