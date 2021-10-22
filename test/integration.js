@@ -19,7 +19,7 @@ test('should work with a single pid', async t => {
   t.false(isNaN(result.cpu), 'cpu')
   t.is(typeof result.memory, 'number', 'memory')
   // z/OS does not report memory
-  if (process.platform !== "os390") {
+  if (process.platform !== 'os390') {
     t.false(isNaN(result.memory), 'memory')
   }
   t.is(typeof result.ppid, 'number', 'ppid')
@@ -72,7 +72,7 @@ test('should work with an array of pids', async t => {
     t.false(isNaN(result[pid].cpu), 'cpu')
     t.is(typeof result[pid].memory, 'number', 'memory')
     // z/OS does not report memory
-    if (process.platform !== "os390") {
+    if (process.platform !== 'os390') {
       t.false(isNaN(result.memory), 'memory')
       t.false(isNaN(result[pid].memory), 'memory')
     }
