@@ -73,7 +73,6 @@ test('should work with an array of pids', async t => {
     t.is(typeof result[pid].memory, 'number', 'memory')
     // z/OS does not report memory
     if (process.platform !== 'os390') {
-      t.false(isNaN(result.memory), 'memory')
       t.false(isNaN(result[pid].memory), 'memory')
     }
 
