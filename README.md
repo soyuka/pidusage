@@ -1,10 +1,10 @@
 # pidusage
 
 [![Lint](https://github.com/soyuka/pidusage/workflows/lint/badge.svg?branch=main)](https://github.com/soyuka/pidusage/actions?query=workflow:lint+branch:main)
-[![MacOS](https://github.com/soyuka/pidusage/workflows/macos/badge.svg?branch=main)](https://github.com/soyuka/pidusage/actions?query=workflow:macos+branch:main)
-[![Ubuntu](https://github.com/soyuka/pidusage/workflows/test/badge.svg?branch=main)](https://github.com/soyuka/pidusage/actions?query=workflow:test+branch:main)
-[![Windows](https://github.com/soyuka/pidusage/workflows/windows/badge.svg?branch=main)](https://github.com/soyuka/pidusage/actions?query=workflow:windows+branch:main)
-[![Alpine](https://github.com/soyuka/pidusage/workflows/alpine/badge.svg?branch=main)](https://github.com/soyuka/pidusage/actions?query=workflow:alpine+branch:main)
+[![MacOS](https://github.com/soyuka/pidusage/workflows/test-macos/badge.svg?branch=main)](https://github.com/soyuka/pidusage/actions?query=workflow:test-macos+branch:main)
+[![Ubuntu](https://github.com/soyuka/pidusage/workflows/linux/badge.svg?branch=main)](https://github.com/soyuka/pidusage/actions?query=workflow:linux+branch:main)
+[![Windows](https://github.com/soyuka/pidusage/workflows/test-windows/badge.svg?branch=main)](https://github.com/soyuka/pidusage/actions?query=workflow:test-windows+branch:main)
+[![Alpine](https://github.com/soyuka/pidusage/workflows/test-alpine/badge.svg?branch=main)](https://github.com/soyuka/pidusage/actions?query=workflow:test-alpine+branch:main)
 [![Code coverage](https://img.shields.io/codecov/c/github/soyuka/pidusage/master.svg)](https://codecov.io/gh/soyuka/pidusage)
 [![npm version](https://img.shields.io/npm/v/pidusage.svg)](https://www.npmjs.com/package/pidusage)
 [![license](https://img.shields.io/github/license/soyuka/pidusage.svg)](https://github.com/soyuka/pidusage/tree/master/license)
