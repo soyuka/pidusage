@@ -171,6 +171,8 @@ Setting the options programatically will override environment variables
 | [usePs] | <code>boolean</code> | `PIDUSAGE_USE_PS`| `false` | When true uses `ps` instead of proc files to fetch process information |
 | [maxage] | <code>number</code> | `PIDUSAGE_MAXAGE`| `60000` | Max age of a process on history. |
 
+`PIDUSAGE_SILENT=1` can be used to remove every console message triggered by pidusage.
+
 ### pidusage.clear()
 
 If needed this function can be used to delete all in-memory metrics and clear the event loop. This is not necessary before exiting as the interval we're registring does not hold up the event loop.
