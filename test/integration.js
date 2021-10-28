@@ -35,20 +35,20 @@ test('should work with a single pid', async t => {
 test('should work with an array of pids', async t => {
   const child = spawn(
     'node',
-    ['-e', 'console.log(123); var c = 0; while(true) {c = Math.pow(c, c);}'],
+    ['-e', 'console.log(`123`); setInterval(() => {}, 1000)'],
     { windowsHide: true }
   )
   const ppid = process.pid
   const pid = child.pid
 
-  await t.notThrows(() =>
+  await t.notThrowsAsync(
     new Promise((resolve, reject) => {
       child.stdout.on('data', d => resolve(d.toString()))
       child.stderr.on('data', d => reject(d.toString()))
       child.on('error', reject)
-      child.on('exit', reject)
+      child.on('exit', code => reject(new Error('script exited with code ' + code)))
     }),
-  'script not executed'
+    'script not executed'
   )
 
   const pids = [ppid, pid]
