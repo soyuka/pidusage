@@ -158,11 +158,11 @@ test('should be able to set usePs from env var', async t => {
   let usePsFromStats
 
   mockery.registerMock('./lib/stats', (_, options) => {
-    usePsFromStats = !!options.usePs
+    usePsFromStats = options.usePs
   })
 
   const beforeValue = process.env.PIDUSAGE_USE_PS
-  process.env.PIDUSAGE_USE_PS = '1'
+  process.env.PIDUSAGE_USE_PS = 'true'
 
   const pidusage = require('../')
   pidusage(1, () => {})
