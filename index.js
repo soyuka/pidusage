@@ -32,7 +32,6 @@ function pidusage (pids, options, callback) {
   }
 
   return new Promise(function (resolve, reject) {
-    console.log('pidusage promise - ' + pids)
     stats(pids, options, function (err, data) {
       if (err) return reject(err)
       resolve(data)
