@@ -8,8 +8,6 @@ const m = require('..')
 test('should work with a single pid', async t => {
   const pid = process.pid
 
-  t.log('pid')
-  t.log(pid)
   const result = await m(pid)
 
   t.log(result)
