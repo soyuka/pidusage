@@ -1,3 +1,7 @@
+### 4.0.0
+
+- fix wmic removed on Windows 11 and add gwmi support
+
 ### 3.0.1
 
 - removed dynamic requires to allow for bundling #154
