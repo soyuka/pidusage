@@ -32,6 +32,7 @@ test('should parse gwmi output on Windows', async t => {
     '' + os.EOL +
     '' + os.EOL +
     'CreationDate               KernelModeTime  ParentProcessId  ProcessId  UserModeTime  WorkingSetSize' + os.EOL +
+    '------------               -----------     -----------     ------------   --------  --------' + os.EOL +
     '20150329221650.080654+060  153750000       0                777        8556250000    110821376'
 
   let calls = 0
