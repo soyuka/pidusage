@@ -1,3 +1,7 @@
+### 3.0.1
+
+- fix wmic removed on Windows 11 and add gwmi support
+
 ### 3.0
 
 - removes node 8 support
