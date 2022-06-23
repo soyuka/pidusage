@@ -26,6 +26,7 @@ var pidusage = require('pidusage')
 pidusage(process.pid, function (err, stats) {
   console.log(stats)
   // => {
+  //   command: '/bin/sh',   // process command name
   //   cpu: 10.0,            // percentage (from 0 to 100*vcore)
   //   memory: 357306368,    // bytes
   //   ppid: 312,            // PPID
@@ -42,6 +43,7 @@ pidusage([727, 1234], function (err, stats) {
   console.log(stats)
   // => {
   //   727: {
+  //     command: '/bin/bash', // process command name
   //     cpu: 10.0,            // percentage (from 0 to 100*vcore)
   //     memory: 357306368,    // bytes
   //     ppid: 312,            // PPID
@@ -51,6 +53,7 @@ pidusage([727, 1234], function (err, stats) {
   //     timestamp: 864000000  // ms since epoch
   //   },
   //   1234: {
+  //     command: '/bin/sh', // process command name
   //     cpu: 0.1,             // percentage (from 0 to 100*vcore)
   //     memory: 3846144,      // bytes
   //     ppid: 727,            // PPID
@@ -66,6 +69,7 @@ pidusage([727, 1234], function (err, stats) {
 const stats = await pidusage(process.pid)
 console.log(stats)
 // => {
+//   command: '/bin/sh',   // process command name
 //   cpu: 10.0,            // percentage (from 0 to 100*vcore)
 //   memory: 357306368,    // bytes
 //   ppid: 312,            // PPID
@@ -80,6 +84,7 @@ function compute(cb) {
   pidusage(process.pid, function (err, stats) {
     console.log(stats)
     // => {
+    //   command: '/bin/sh',   // process command name
     //   cpu: 10.0,            // percentage (from 0 to 100*vcore)
     //   memory: 357306368,    // bytes
     //   ppid: 312,            // PPID
@@ -130,6 +135,7 @@ interval(1000)
 | `ctime`     | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ | ✅ |
 | `elapsed`   | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ | ✅ |
 | `timestamp` | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ | ✅ |
+| `command`   | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ | ✅ |
 
 ✅ = Working
 ℹ️ = Not Accurate
