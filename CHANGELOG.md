@@ -1,3 +1,7 @@
+### 3.1.0
+
+- add `command` property to return object
+
 ### 3.0
 
 - removes node 8 support
