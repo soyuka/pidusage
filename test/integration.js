@@ -15,6 +15,8 @@ test('should work with a single pid', async t => {
   t.is(typeof result, 'object')
 
   t.is(typeof result, 'object', 'result')
+  t.is(typeof result.command, 'string', 'command')
+  t.true(result.command.includes('node'), 'command')
   t.is(typeof result.cpu, 'number', 'cpu')
   t.false(isNaN(result.cpu), 'cpu')
   t.is(typeof result.memory, 'number', 'memory')
@@ -68,6 +70,8 @@ test('should work with an array of pids', async t => {
 
   pids.forEach(pid => {
     t.is(typeof result[pid], 'object', 'result')
+    t.is(typeof result[pid].command, 'string', 'command')
+    t.true(result[pid].command.includes('node'), 'command')
     t.is(typeof result[pid].cpu, 'number', 'cpu')
     t.false(isNaN(result[pid].cpu), 'cpu')
     t.is(typeof result[pid].memory, 'number', 'memory')

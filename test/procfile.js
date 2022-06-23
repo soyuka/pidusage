@@ -79,6 +79,7 @@ test('procfile stat', async t => {
   t.is(stat.memory, 0)
   t.is(stat.ppid, 0)
   t.is(stat.pid, 10)
+  t.is(stat.command, 'test')
   t.is(typeof stat.elapsed, 'number', 'elapsed')
   t.false(isNaN(stat.elapsed), 'elapsed')
   t.is(typeof stat.timestamp, 'number', 'timestamp')

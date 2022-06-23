@@ -26,11 +26,11 @@ test.after(() => {
 
 test('should parse ps output on Darwin', async t => {
   const stdout = '' +
-    '   ELAPSED   PID  PPID  %CPU     RSS           TIME' + os.EOL +
-    '2-40:50:53   430     1   3.0    5145  1-02:03:04.07' + os.EOL +
-    '  40:50:53   432   430   0.0    2364  1-01:02:03.10' + os.EOL +
-    '  01:50:50   727     1  10.0  348932       14:27.26' + os.EOL +
-    '     00:20  7166     1   0.1    3756        0:00.02'
+    '   ELAPSED   PID  PPID  %CPU     RSS           TIME         COMMAND' + os.EOL +
+    '2-40:50:53   430     1   3.0    5145  1-02:03:04.07   /sbin/launchd' + os.EOL +
+    '  40:50:53   432   430   0.0    2364  1-01:02:03.10         /bin/sh' + os.EOL +
+    '  01:50:50   727     1  10.0  348932       14:27.26        /bin/top' + os.EOL +
+    '     00:20  7166     1   0.1    3756        0:00.02  /test space/sh'
 
   mockery.registerMock('child_process', {
     spawn: () => mocks.spawn(stdout, '', null, 0, null)
@@ -48,6 +48,7 @@ test('should parse ps output on Darwin', async t => {
   const result = await pify(ps)([348932], {})
   t.deepEqual(result, {
     430: {
+      command: '/sbin/launchd',
       cpu: (93784070 / 319853000) * 100,
       memory: 5145 * 1024,
       ppid: 1,
@@ -57,6 +58,7 @@ test('should parse ps output on Darwin', async t => {
       timestamp: 864000000
     },
     432: {
+      command: '/bin/sh',
       cpu: (90123100 / 147053000) * 100,
       memory: 2364 * 1024,
       ppid: 430,
@@ -66,6 +68,7 @@ test('should parse ps output on Darwin', async t => {
       timestamp: 864000000
     },
     727: {
+      command: '/bin/top',
       cpu: (867260 / 6650000) * 100,
       memory: 348932 * 1024,
       ppid: 1,
@@ -75,6 +78,7 @@ test('should parse ps output on Darwin', async t => {
       timestamp: 864000000
     },
     7166: {
+      command: '/test space/sh',
       cpu: (20 / 20000) * 100,
       memory: 3756 * 1024,
       ppid: 1,
