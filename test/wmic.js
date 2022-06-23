@@ -27,9 +27,9 @@ test.after(() => {
 })
 
 test('should parse wmic output on Windows', async t => {
-  const stdout = '' +
-    'CreationDate               KernelModeTime  ParentProcessId  ProcessId  UserModeTime  WorkingSetSize  CommandLine' + os.EOL +
-    '20150329221650.080654+060  153750000       0                777        8556250000    110821376       "C:\\Program\\ Files\\test.exe"'
+  const stdout = '' + os.EOL +
+    'Node,CreationDate,ExecutablePath,KernelModeTime,ParentProcessId,ProcessId,UserModeTime,WorkingSetSize' + os.EOL +
+    'DESKTOP-55F748A,20150329221650.080654+060,C:\\Program\\ Files\\test.exe,153750000,0,777,8556250000,110821376'
 
   let calls = 0
 
@@ -45,7 +45,7 @@ test('should parse wmic output on Windows', async t => {
   let result = await pify(wmic)([6456], { maxage: 1000 })
   t.deepEqual(result, {
     777: {
-      command: '"C:\\Program\\ Files\\test.exe"',
+      command: 'C:\\Program\\ Files\\test.exe',
       cpu: 0,
       memory: 110821376,
       ppid: 0,
