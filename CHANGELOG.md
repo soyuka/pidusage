@@ -1,3 +1,7 @@
+### 3.1
+
+- removed dynamic requires to allow for bundling
+
 ### 3.0
 
 - removes node 8 support
