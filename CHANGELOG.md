@@ -1,3 +1,7 @@
+### Release pending
+
+- add IBM i (os400) support
+
 ### 3.0
 
 - removes node 8 support

@@ -122,14 +122,14 @@ interval(1000)
 
 ## Compatibility
 
-| Property | Linux | FreeBSD | NetBSD | SunOS | macOS | Win | AIX | Alpine
-| ---         | --- | --- | --- | --- | --- | --- | --- | --- |
-| `cpu`       | ✅ | ❓ | ❓ | ❓ | ✅ | ℹ️ | ❓ | ✅ |
-| `memory`    | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ | ✅ |
-| `pid`       | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ | ✅ |
-| `ctime`     | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ | ✅ |
-| `elapsed`   | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ | ✅ |
-| `timestamp` | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ | ✅ |
+| Property | Linux | FreeBSD | NetBSD | SunOS | macOS | Win | AIX | IBM i | Alpine
+| ---         | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `cpu`       | ✅ | ❓ | ❓ | ❓ | ✅ | ℹ️ | ❓ | ℹ️ | ✅ |
+| `memory`    | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ | ℹ️ | ✅ |
+| `pid`       | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ | ✅ | ✅ |
+| `ctime`     | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ | ℹ️ | ✅ |
+| `elapsed`   | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ | ✅ | ✅ |
+| `timestamp` | ✅ | ❓ | ❓ | ❓ | ✅ | ✅ | ❓ | ✅ | ✅ |
 
 ✅ = Working
 ℹ️ = Not Accurate
