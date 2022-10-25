@@ -1,6 +1,7 @@
-### 3.1
+### 3.0.1
 
-- removed dynamic requires to allow for bundling
+- removed dynamic requires to allow for bundling #154
+- add ibm platform (os400) #158
 
 ### 3.0
 
