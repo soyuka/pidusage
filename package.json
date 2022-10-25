@@ -30,7 +30,7 @@
     "safe-buffer": "^5.2.1"
   },
   "devDependencies": {
-    "ava": "^3.10.1",
+    "ava": "^5.0.1",
     "codecov": "^3.7.0",
     "mockdate": "^2.0.5",
     "mockery": "^2.1.0",
