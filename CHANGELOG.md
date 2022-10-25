@@ -1,3 +1,8 @@
+### 3.0.1
+
+- removed dynamic requires to allow for bundling #154
+- add ibm platform (os400) #158
+
 ### 3.0
 
 - removes node 8 support
