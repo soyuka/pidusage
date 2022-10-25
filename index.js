@@ -22,7 +22,7 @@ function pidusage (pids, options, callback) {
   }
 
   options = Object.assign({
-    usePs: process.env.PIDUSAGE_USE_PS,
+    usePs: /^true$/i.test(process.env.PIDUSAGE_USE_PS),
     maxage: process.env.PIDUSAGE_MAXAGE
   }, options)
 
