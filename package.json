@@ -24,7 +24,7 @@
     "lint": "standard",
     "test": "nyc ava -m \"!*benchmark*\"",
     "coverage": "codecov",
-    "bench": "ava -m \"*benchmark*\""
+    "bench": "ava -m \"*benchmark*\" --timeout=10m"
   },
   "dependencies": {
     "safe-buffer": "^5.2.1"
