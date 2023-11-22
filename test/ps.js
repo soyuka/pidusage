@@ -2,7 +2,7 @@ const mockery = require('mockery')
 const test = require('ava')
 const os = require('os')
 const mockdate = require('mockdate')
-const pify = require('pify')
+const { promisify } = require('util')
 
 const mocks = require('./helpers/_mocks')
 
@@ -45,7 +45,7 @@ test('should parse ps output on Darwin', async t => {
 
   const ps = require('../lib/ps')
 
-  const result = await pify(ps)([348932], {})
+  const result = await promisify(ps)([348932], {})
   t.deepEqual(result, {
     430: {
       cpu: (93784070 / 319853000) * 100,
