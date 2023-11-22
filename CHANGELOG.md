@@ -1,3 +1,7 @@
+### 3.0.2
+
+- add compatibility with ps from busybox
+
 ### 3.0.1
 
 - removed dynamic requires to allow for bundling #154

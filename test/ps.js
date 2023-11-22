@@ -45,7 +45,7 @@ test('should parse ps output on Darwin', async t => {
 
   const ps = require('../lib/ps')
 
-  const result = await pify(ps)([348932], {})
+  const result = await pify(ps)([430, 7166], {})
   t.deepEqual(result, {
     430: {
       cpu: (93784070 / 319853000) * 100,
@@ -54,24 +54,6 @@ test('should parse ps output on Darwin', async t => {
       pid: 430,
       ctime: (1 * 86400 + 2 * 3600 + 3 * 60 + 4 * 1) * 1000 + (10 * 7),
       elapsed: (2 * 86400 + 40 * 3600 + 50 * 60 + 53 * 1) * 1000,
-      timestamp: 864000000
-    },
-    432: {
-      cpu: (90123100 / 147053000) * 100,
-      memory: 2364 * 1024,
-      ppid: 430,
-      pid: 432,
-      ctime: (1 * 86400 + 1 * 3600 + 2 * 60 + 3 * 1) * 1000 + (10 * 10),
-      elapsed: (40 * 3600 + 50 * 60 + 53 * 1) * 1000,
-      timestamp: 864000000
-    },
-    727: {
-      cpu: (867260 / 6650000) * 100,
-      memory: 348932 * 1024,
-      ppid: 1,
-      pid: 727,
-      ctime: (14 * 60 + 27 * 1) * 1000 + (10 * 26),
-      elapsed: (1 * 3600 + 50 * 60 + 50 * 1) * 1000,
       timestamp: 864000000
     },
     7166: {
@@ -110,7 +92,7 @@ test('should parse ps output on *nix', async t => {
   //
   // const ps = require('../lib/ps')
   //
-  // const result = await pify(ps)([11678], {})
+  // const result = await pify(ps)([430, 7166], {})
   // t.deepEqual(result, {
   //   430: {
   //     cpu: 3.0,
@@ -119,24 +101,6 @@ test('should parse ps output on *nix', async t => {
   //     pid: 430,
   //     ctime: (1 * 86400 + 2 * 3600 + 3 * 60 + 4 * 1) * 1000,
   //     elapsed: (2 * 86400 + 40 * 3600 + 50 * 60 + 53 * 1) * 1000,
-  //     timestamp: 864000000
-  //   },
-  //   432: {
-  //     cpu: 0.0,
-  //     memory: 2364 * 1024,
-  //     ppid: 430,
-  //     pid: 432,
-  //     ctime: (1 * 86400 + 1 * 3600 + 2 * 60 + 3 * 1) * 1000,
-  //     elapsed: (40 * 3600 + 50 * 60 + 53 * 1) * 1000,
-  //     timestamp: 864000000
-  //   },
-  //   727: {
-  //     cpu: 10.0,
-  //     memory: 348932 * 1024,
-  //     ppid: 1,
-  //     pid: 727,
-  //     ctime: (14 * 60 + 27 * 1) * 1000,
-  //     elapsed: (1 * 3600 + 50 * 60 + 50 * 1) * 1000,
   //     timestamp: 864000000
   //   },
   //   7166: {
