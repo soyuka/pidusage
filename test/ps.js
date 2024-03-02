@@ -1,3 +1,5 @@
+'use strict'
+
 const mockery = require('mockery')
 const test = require('ava')
 const os = require('os')

@@ -1,3 +1,5 @@
+'use strict'
+
 const { spawn } = require('child_process')
 const test = require('ava')
 const tspan = require('time-span')
