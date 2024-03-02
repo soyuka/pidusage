@@ -1,3 +1,5 @@
+'use strict'
+
 const EventEmitter = require('events')
 const streamify = require('string-to-stream')
 const through = require('through')
