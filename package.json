@@ -18,20 +18,21 @@
     "index.js"
   ],
   "engines": {
-    "node": ">=10"
+    "node": ">=18"
   },
   "scripts": {
     "lint": "standard",
     "test": "nyc ava -m \"!*benchmark*\"",
-    "coverage": "codecov",
+    "coverage": "c8 ava",
     "bench": "ava -m \"*benchmark*\""
   },
   "dependencies": {
     "safe-buffer": "^5.2.1"
   },
   "devDependencies": {
-    "ava": "^3.10.1",
-    "codecov": "^3.7.0",
+    "balanced-match": "^3.0.1",
+    "c8": "^10.1.3",
+    "ava": "^6.2.0",
     "mockdate": "^2.0.5",
     "mockery": "^2.1.0",
     "nyc": "^15.1.0",
@@ -50,7 +51,8 @@
     "proc"
   ],
   "ava": {
-    "verbose": true
+    "verbose": true,
+    "failWithoutAssertions": false
   },
   "nyc": {
     "reporter": [
