@@ -1,6 +1,7 @@
 ### 4.0.0
 
 - fix wmic removed on Windows 11 and add gwmi support
+- node >= 17 
 
 ### 3.0.1
 

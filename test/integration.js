@@ -122,28 +122,28 @@ test('should throw an error if the pid is too large', async t => {
   await t.throwsAsync(async () => m(99999999))
 })
 
-test.cb('should exit right away because we cleaned up the event loop', t => {
-  if (os.platform().match(/^win/)) return t.end()
+test('should exit right away because we cleaned up the event loop', t => {
+  if (os.platform().match(/^win/)) return t.pass()
 
   process.clear_pidusage = '1'
   require(path.join(__dirname, '/fixtures/_eventloop'))
   process.nextTick(() => {
-    t.end()
+    t.pass()
   })
 })
 
-test.cb('should exit right away because the event loop ignores history', t => {
-  if (os.platform().match(/^win/)) return t.end()
+test('should exit right away because the event loop ignores history', t => {
+  if (os.platform().match(/^win/)) return t.pass()
 
   process.clear_pidusage = '0'
   require(path.join(__dirname, '/fixtures/_eventloop'))
   process.nextTick(() => {
-    t.end()
+    t.pass()
   })
 })
 
-test.cb("should use the callback if it's provided", t => {
-  m(process.pid, () => t.end())
+test("should use the callback if it's provided", t => {
+  m(process.pid, () => t.pass())
 })
 
 process.on('unhandledException', (e) => {
