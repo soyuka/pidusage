@@ -1,3 +1,7 @@
+### 4.0.1
+
+- fix spawned wmic processes not exiting after wmic/gwmi detection in packaged apps, leading to infinite build up of "WMI Commandline Utility" processes and system instability
+
 ### 4.0.0
 
 - fix wmic removed on Windows 11 and add gwmi support
