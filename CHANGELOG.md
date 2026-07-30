@@ -1,3 +1,7 @@
+### 4.0.2
+
+- gwmi: invoke powershell with `-NoProfile -NonInteractive` so stats polling no longer executes user profile scripts
+
 ### 4.0.1
 
 - fix spawned wmic processes not exiting after wmic/gwmi detection in packaged apps, leading to infinite build up of "WMI Commandline Utility" processes and system instability
