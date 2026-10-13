@@ -1,6 +1,5 @@
 const { spawn } = require('child_process')
 const test = require('ava')
-const tspan = require('time-span')
 
 const m = require('..')
 
@@ -35,15 +34,13 @@ async function destroy (childs) {
 async function execute (childs, pidno, times, options = {}) {
   const pids = childs.map(child => child.pid).slice(0, pidno)
 
-  const end = tspan()
+  const start = performance.now()
   try {
     for (let i = 0; i < times; i++) {
       await m(pids, options)
     }
-    const time = end()
-    return Promise.resolve(time)
+    return Promise.resolve(performance.now() - start)
   } catch (err) {
-    end()
     return Promise.reject(err)
   }
 }
