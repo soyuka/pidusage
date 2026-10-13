@@ -169,6 +169,7 @@ Setting the options programatically will override environment variables
 | Param | Type | Environment variable | Default | Description |
 | --- | --- | --- | --- | --- |
 | [usePs] | <code>boolean</code> | `PIDUSAGE_USE_PS`| `false` | When true uses `ps` instead of proc files to fetch process information |
+| [useGwmi] | <code>boolean</code> | | `false` | Windows only, use gwmi (PowerShell) directly without checking whether wmic is available |
 | [maxage] | <code>number</code> | `PIDUSAGE_MAXAGE`| `60000` | Max age of a process on history. |
 
 `PIDUSAGE_SILENT=1` can be used to remove every console message triggered by pidusage.
