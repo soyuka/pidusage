@@ -1,8 +1,9 @@
-### 4.0.2
+### 4.1.0
 
 - gwmi: invoke powershell with `-NoProfile -NonInteractive` so stats polling no longer executes user profile scripts
 - win: detect wmic once without spawning a process, add `useGwmi` option to skip the detection
 - fixes DEP0190 deprecation warning on node 24 (#191)
+- drop `safe-buffer`, pidusage has no runtime dependencies anymore
 
 ### 4.0.1
 
