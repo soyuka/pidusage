@@ -17,7 +17,7 @@ function load (wmicExists) {
         wmicChecks.push(p)
         return wmicExists
       }
-      return fs.existsSync(p)
+      return false
     }
   })
   mockery.registerMock('./wmic', (pids, options, done) => done(null, { [pids[0]]: { marker: 'wmic' } }))
