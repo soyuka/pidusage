@@ -2,7 +2,7 @@ const mockery = require('mockery')
 const test = require('ava')
 const os = require('os')
 const mockdate = require('mockdate')
-const pify = require('pify')
+const { promisify } = require('util')
 
 const mocks = require('./helpers/_mocks')
 
@@ -42,7 +42,7 @@ test('should parse wmic output on Windows', async t => {
 
   const wmic = require('../lib/wmic')
 
-  let result = await pify(wmic)([6456], { maxage: 1000 })
+  let result = await promisify(wmic)([6456], { maxage: 1000 })
   t.deepEqual(result, {
     777: {
       cpu: 0,
@@ -55,7 +55,7 @@ test('should parse wmic output on Windows', async t => {
     }
   })
 
-  result = await pify(wmic)([6456], { maxage: 1000 })
+  result = await promisify(wmic)([6456], { maxage: 1000 })
 
   t.is(calls, 3, '2 first calls to put in history + 1')
 
@@ -65,7 +65,7 @@ test('should parse wmic output on Windows', async t => {
   await timeout(1000)
 
   calls = 0
-  result = await pify(wmic)([6456], { maxage: 1000 })
+  result = await promisify(wmic)([6456], { maxage: 1000 })
 
   t.is(calls, 2, '2 first calls')
 

@@ -1,16 +1,15 @@
 const EventEmitter = require('events')
-const streamify = require('string-to-stream')
-const through = require('through')
+const { PassThrough, Readable } = require('stream')
 
 module.exports = {
   spawn: (stdout, stderr, error, code, signal) => {
     const ee = new EventEmitter()
 
-    ee.stdout = through(function (d) { this.queue(d) })
-    ee.stderr = through(function (d) { this.queue(d) })
+    ee.stdout = new PassThrough()
+    ee.stderr = new PassThrough()
 
-    streamify(stderr).pipe(ee.stderr)
-    streamify(stdout).pipe(ee.stdout)
+    Readable.from([stderr]).pipe(ee.stderr)
+    Readable.from([stdout]).pipe(ee.stdout)
 
     if (error) {
       ee.emit('error', error)

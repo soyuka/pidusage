@@ -2,7 +2,7 @@ const mockery = require('mockery')
 const test = require('ava')
 const os = require('os')
 const mockdate = require('mockdate')
-const pify = require('pify')
+const { promisify } = require('util')
 
 const mocks = require('./helpers/_mocks')
 
@@ -39,14 +39,14 @@ test.serial('should spawn powershell without the user profile', async t => {
 
   mockery.registerMock('child_process', {
     spawn: (cmd, args, options) => {
-      calls.push({ cmd: cmd, args: args, options: options })
+      calls.push({ cmd, args, options })
       return mocks.spawn(stdout, '', null, 0, null)
     }
   })
 
   const gwmi = require('../lib/gwmi')
 
-  await pify(gwmi)([777], { maxage: 1000 })
+  await promisify(gwmi)([777], { maxage: 1000 })
 
   t.true(calls.length > 0, 'powershell was spawned')
 
@@ -89,7 +89,7 @@ test('should parse gwmi output on Windows', async t => {
 
   const gwmi = require('../lib/gwmi')
 
-  let result = await pify(gwmi)([6456], { maxage: 1000 })
+  let result = await promisify(gwmi)([6456], { maxage: 1000 })
   t.deepEqual(result, {
     777: {
       cpu: 0,
@@ -102,7 +102,7 @@ test('should parse gwmi output on Windows', async t => {
     }
   })
 
-  result = await pify(gwmi)([6456], { maxage: 1000 })
+  result = await promisify(gwmi)([6456], { maxage: 1000 })
 
   t.is(calls, 3, '2 first calls to put in history + 1')
 
@@ -112,7 +112,7 @@ test('should parse gwmi output on Windows', async t => {
   await timeout(1000)
 
   calls = 0
-  result = await pify(gwmi)([6456], { maxage: 1000 })
+  result = await promisify(gwmi)([6456], { maxage: 1000 })
 
   t.is(calls, 2, '2 first calls')
 

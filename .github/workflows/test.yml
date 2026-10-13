@@ -11,12 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [ '18', '20', '22', '23' ]
+        node: [ '18', '20', '22', '24' ]
     name: Test Node ${{ matrix.node }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Setup node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
       - run: npm install
@@ -25,9 +25,11 @@ jobs:
     runs-on: ubuntu-latest
     name: Test coverage
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Setup node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
       - run: npm install
       - run: npm run coverage
       - uses: codecov/codecov-action@v5
